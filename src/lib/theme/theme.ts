@@ -7,19 +7,23 @@ export const theme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#1976d2",
-      dark: "#1565c0",
+      main: "#e5322d",
+      dark: "#d42b26",
     },
     secondary: {
       main: "#9c27b0",
     },
     background: {
-      default: "#fafafa",
+      default: "#f5f5fa",
       paper: "#ffffff",
+    },
+    text: {
+      primary: "#333333",
+      secondary: "#666666",
     },
   },
   typography: {
-    fontFamily: "var(--font-inter), ui-sans-serif, system-ui, sans-serif",
+    fontFamily: "var(--font-poppins), ui-sans-serif, system-ui, sans-serif",
   },
   shape: {
     borderRadius: 12,
@@ -37,6 +41,14 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           backgroundImage: "none",
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#ffffff",
+          color: "#333333",
         },
       },
     },
