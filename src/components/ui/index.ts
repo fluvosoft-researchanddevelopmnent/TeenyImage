@@ -15,3 +15,5 @@ export type { LogoProps } from "./Logo";
 
 export { ToolCard } from "./ToolCard";
 export type { ToolCardProps } from "./ToolCard";
+
+export { FileUploader } from "./FileUploader";
