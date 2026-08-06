@@ -1,0 +1,76 @@
+PDF App — Full Feature List
+An iLovePDF-style toolkit, with a plagiarism/similarity check as the core differentiator.
+Core Toolkit
+Convert
+PDF ↔ Word, Excel, PowerPoint
+JPG/PNG ↔ PDF
+HTML → PDF
+PDF → PDF/A (archival format)
+Organize
+Merge PDFs
+Split PDF (by page range or extract specific pages)
+Remove pages
+Rotate pages
+Sort/reorder pages (drag-and-drop)
+Extract images from PDF
+Edit
+Add/edit text, images, and shapes directly on a PDF
+Add page numbers (custom position/style)
+Add watermark (text/image, position, opacity)
+Crop pages
+Annotate/highlight/comment
+Optimize & Secure
+Compress PDF (selectable quality levels)
+Add/remove password protection
+Redact sensitive content
+Encrypt/decrypt
+Sign & Fill
+E-signature (draw/type/upload signature)
+Fill PDF forms
+Request signatures from others (multi-party)
+Scan & Capture
+Camera-based document scanner (auto edge detection)
+Multi-page scan → single PDF
+OCR (scanned image/text → searchable, editable PDF)
+Account & Infrastructure
+Cloud sync (Google Drive / Dropbox / OneDrive import-export)
+File history / recently used
+In-app file search
+Batch processing (multiple files at once)
+Dark mode + alternate app icon
+Differentiator: Plagiarism / Similarity Check
+Turnitin-style detection is the hardest part to replicate — its real moat is a huge private corpus of previously-submitted papers, not the algorithm. A realistic MVP combines two sources:
+External API
+ — call an existing API (Copyscape, Originality.ai, PlagiarismCheck.org) for web-wide matching
+Internal index
+ — build a growing internal index of your own users' submitted documents, fingerprinted and matched against each other, so repeat submissions get flagged honestly
+Pipeline: upload → extract/OCR text → generate n-gram shingle fingerprints (MinHash/SimHash) → match against both sources → return a similarity score with highlighted matching passages, and add the new fingerprints to the internal index for future checks.
+Subscription Tiers
+Structured so free users can always finish and save their work — the top complaint in iLovePDF's own reviews was getting blocked after doing the work, not before.
+Tier
+Price idea
+What's included
+Free
+৳0
+All core PDF tools (merge, split, compress, convert, sign) — unlimited saves/exports, daily usage cap, small ads
+Pro
+Monthly / annual
+Unlimited operations, no ads, larger file size limits, batch processing, OCR, e-signature requests to others
+Pro + Plagiarism
+Add-on or top tier
+Everything in Pro + a monthly quota of plagiarism checks, full similarity reports with source links
+Pay-per-check
+One-off
+A single plagiarism check without a subscription — softens the forced-subscription complaint
+Lessons From iLovePDF's Play Store Reviews
+Pulled directly from the live Android app's reviews (150 recent + 80 filtered to 1-star):
+Billing trust
+ — Trial billing charged immediately instead of after the stated free-trial period, with refunds often denied
+Paywall timing
+ — Users blocked from saving/exporting only after finishing their edits — widely called a bait-and-switch
+Stability
+ — Crashes on open, generic error messages, and a text-editing tool that frequently breaks
+Missing feature
+ — No in-app file search, despite being repeatedly requested
+Privacy
+ — Documents uploaded to the cloud without a clear in-app notice
