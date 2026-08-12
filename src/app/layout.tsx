@@ -5,7 +5,6 @@ import { ThemeRegistry } from "@/lib/theme/ThemeRegistry";
 import { AppProvider } from "@/context/AppContext";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { CloudSyncModal } from "@/components/common/CloudSyncModal";
 
 import "./globals.css";
 
@@ -17,8 +16,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "TeenyPDF — Modern PDF Tools & Plagiarism Engine",
-  description: "Lightweight, secure, 100% client-side PDF tools with built-in Turnitin-style plagiarism detection.",
+  title: "TeenyPDF — Free PDF Converter Tools",
+  description: "Free, browser-based PDF conversion tools. Convert PDF to Word, Excel, PowerPoint, JPG, Markdown and more — or convert Word, Excel, images into PDF. 100% client-side, private, and unlimited.",
   icons: {
     icon: "/favicon.svg",
   },
@@ -38,7 +37,6 @@ export default function RootLayout({
         <AppProvider>
           <ThemeRegistry>
             <Header />
-            <CloudSyncModal />
             <main className="flex-1">{children}</main>
             <Footer />
           </ThemeRegistry>

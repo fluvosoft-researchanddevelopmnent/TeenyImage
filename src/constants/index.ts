@@ -1,31 +1,26 @@
 export const APP_NAME = "TeenyPDF";
-export const APP_DESCRIPTION = "Lightweight PDF tools for the web";
+export const APP_DESCRIPTION = "Fast, free PDF conversion tools for the web";
 
 export const NAV_LINKS = [
-  { label: "Merge PDF", href: "/merge-pdf" },
-  { label: "Split PDF", href: "/split-pdf" },
-  { label: "Compress PDF", href: "/compress-pdf" },
-  { label: "Convert PDF", href: "/convert-pdf", hasDropdown: true },
-  { label: "All PDF tools", href: "/tools", hasDropdown: true },
+  { label: "PDF to Word", href: "/pdf-to-word" },
+  { label: "PDF to JPG", href: "/pdf-to-jpg" },
+  { label: "JPG to PDF", href: "/jpg-to-pdf" },
+  { label: "Word to PDF", href: "/word-to-pdf" },
+  { label: "All Converters", href: "/", hasDropdown: true },
 ] as const;
 
 export const HERO_FILTERS = [
   "All",
-  "Workflows",
-  "Organize PDF",
-  "Optimize PDF",
-  "Convert PDF",
-  "Edit PDF",
-  "PDF Security",
-  "PDF Intelligence",
+  "PDF to Other",
+  "Other to PDF",
 ] as const;
 
 export const HERO_CONTENT = {
-  title: "Every tool you need to work with PDFs in one place",
+  title: "Free PDF Converter — Convert PDFs to & from any format",
   descriptionLine1:
-    "Every tool you need to use PDFs, at your fingertips. All are 100% FREE and easy to use! Merge,",
+    "All the conversion tools you need — 100% free, browser-based, and private.",
   descriptionLine2:
-    "split, compress, convert, rotate, unlock and watermark PDFs with just a few clicks.",
+    "Convert PDF to Word, Excel, PowerPoint, JPG, Markdown and more. Or turn Word, Excel, images into PDF.",
 } as const;
 
 export * from "./tools";

@@ -10,7 +10,7 @@ export default function JpgToPdfPage() {
     <ToolWorkspaceLayout
       title="Convert JPG/PNG to PDF"
       description="Convert images (JPG, PNG, WEBP) to PDF in seconds. Easily adjust margins and alignment."
-      category="Convert PDF"
+      category="Other to PDF"
       icon={ImagePlus}
       actionButtonText="Convert Images to PDF"
       acceptedFileTypes="image/*"

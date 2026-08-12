@@ -10,7 +10,7 @@ export default function PdfToPdfAPage() {
     <ToolWorkspaceLayout
       title="Convert PDF to PDF/A"
       description="Transform standard PDFs into ISO 19005-1 compliant PDF/A documents for long-term digital archiving."
-      category="Optimize PDF"
+      category="PDF to Other"
       icon={Archive}
       actionButtonText="Convert to PDF/A ISO Standard"
       onExecute={async (files) => {

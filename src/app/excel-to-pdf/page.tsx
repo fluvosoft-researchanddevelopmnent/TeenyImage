@@ -11,7 +11,7 @@ export default function ExcelToPdfPage() {
     <ToolWorkspaceLayout
       title="Convert Excel (XLSX) to PDF"
       description="Turn XLSX and XLS spreadsheets into easily readable PDF tables."
-      category="Convert PDF"
+      category="Other to PDF"
       icon={Sheet}
       actionButtonText="Convert Excel to PDF"
       acceptedFileTypes=".xlsx,.xls,.csv"

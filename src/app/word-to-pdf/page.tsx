@@ -11,7 +11,7 @@ export default function WordToPdfPage() {
     <ToolWorkspaceLayout
       title="Convert Word (DOCX) to PDF"
       description="Transform DOC and DOCX documents into clean, non-alterable PDF files."
-      category="Convert PDF"
+      category="Other to PDF"
       icon={FileText}
       actionButtonText="Convert Word to PDF"
       acceptedFileTypes=".docx,.doc"
