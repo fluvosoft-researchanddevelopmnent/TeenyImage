@@ -7,7 +7,6 @@ import {
   ImagePlus,
   Presentation,
   Sheet,
-  Archive,
 } from "lucide-react";
 
 import type { ToolFilterCategory } from "@/types";
@@ -41,7 +40,6 @@ export const PDF_TOOLS: Tool[] = [
     icon: Presentation,
     iconClassName: "bg-[#fff0e6] text-[#d24726]",
   },
-
   {
     title: "PDF to JPG",
     description: "Convert each PDF page into a high-resolution JPG image or extract all images.",
@@ -60,15 +58,6 @@ export const PDF_TOOLS: Tool[] = [
     iconClassName: "bg-[#eef2ff] text-[#6366f1]",
     isNew: true,
   },
-  {
-    title: "PDF to PDF/A",
-    description:
-      "Transform your PDF to PDF/A, the ISO-standardized version of PDF for long-term archiving.",
-    href: "/pdf-to-pdfa",
-    categories: ["PDF to Other"],
-    icon: Archive,
-    iconClassName: "bg-[#e8f7ef] text-[#2ecc71]",
-  },
 
   // ── Other → PDF ──────────────────────────────────────────────────────────
   {
@@ -78,14 +67,6 @@ export const PDF_TOOLS: Tool[] = [
     categories: ["Other to PDF"],
     icon: FileText,
     iconClassName: "bg-[#e8f0fe] text-[#2b579a]",
-  },
-  {
-    title: "PowerPoint to PDF",
-    description: "Make PPT and PPTX slideshows easy to view by converting them to PDF.",
-    href: "/powerpoint-to-pdf",
-    categories: ["Other to PDF"],
-    icon: Presentation,
-    iconClassName: "bg-[#fff0e6] text-[#d24726]",
   },
   {
     title: "Excel to PDF",
