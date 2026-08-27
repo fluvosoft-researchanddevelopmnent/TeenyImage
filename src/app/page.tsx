@@ -1,4 +1,9 @@
-import { HeroSection, ToolsSection } from "@/components/common";
+import {
+  HeroSection,
+  ToolsSection,
+  WorkYourWaySection,
+  FeatureTrustSection,
+} from "@/components/common";
 import { RecentFilesSection } from "@/components/common/RecentFilesSection";
 
 export default function HomePage() {
@@ -7,6 +12,8 @@ export default function HomePage() {
       <HeroSection />
       <RecentFilesSection />
       <ToolsSection />
+      <WorkYourWaySection />
+      <FeatureTrustSection />
     </>
   );
 }

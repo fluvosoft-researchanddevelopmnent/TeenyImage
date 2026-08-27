@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
-import { Globe } from "lucide-react";
-import { jsPDF } from "jspdf";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Globe, AlertTriangle } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import { ConversionPageLayout } from "@/components/common";
+import { convertHtmlStringToPdf } from "@/lib/pdf/htmlToPdf";
+
+type InputMode = "file" | "code";
 
 export default function HtmlToPdfPage() {
   const { addRecentFile } = useApp();
@@ -12,110 +14,175 @@ export default function HtmlToPdfPage() {
   const [htmlCode, setHtmlCode] = useState(
     "<h1>Sample Document Title</h1>\n<p>This is a rendered HTML document converted cleanly to PDF.</p>\n<ul>\n  <li>Feature 1: Full styling support</li>\n  <li>Feature 2: High resolution vector output</li>\n</ul>"
   );
-  const [activeTab, setActiveTab] = useState<"url" | "code">("code");
-  const [webUrl, setWebUrl] = useState("https://example.com");
+  const [activeTab, setActiveTab] = useState<InputMode>("code");
   const [isProcessing, setIsProcessing] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
   const [resultName, setResultName] = useState("");
+  const [warning, setWarning] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const urlRef = useRef<string | null>(null);
 
-  const handleFileChange = (file: File | null) => {
+  useEffect(() => {
+    return () => {
+      if (urlRef.current) URL.revokeObjectURL(urlRef.current);
+    };
+  }, []);
+
+  const canConvert = useMemo(() => {
+    if (activeTab === "code") return htmlCode.trim().length > 0;
+    return Boolean(selectedFile);
+  }, [activeTab, htmlCode, selectedFile]);
+
+  const handleFileChange = async (file: File | null) => {
     setSelectedFile(file);
     setDownloadUrl(null);
+    setWarning(null);
+    setError(null);
+    if (file) {
+      setActiveTab("file");
+      try {
+        const text = await file.text();
+        setHtmlCode(text);
+      } catch {
+        // keep previous code; convert will read the file again
+      }
+    }
   };
 
   const convert = async () => {
     setIsProcessing(true);
+    setDownloadUrl(null);
+    setWarning(null);
+    setError(null);
+
     try {
-      const pdf = new jsPDF();
-      pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(18);
-      pdf.text("Converted HTML Document", 15, 25);
-      pdf.setFont("helvetica", "normal");
-      pdf.setFontSize(11);
+      let html = "";
 
-      const sourceText =
-        activeTab === "url"
-          ? `Web content captured from: ${webUrl}`
-          : htmlCode.replace(/<[^>]*>/g, "\n").replace(/\n{2,}/g, "\n").trim();
+      if (activeTab === "file") {
+        if (!selectedFile) {
+          setError("Select an HTML file first.");
+          return;
+        }
+        html = await selectedFile.text();
+      } else {
+        html = htmlCode;
+      }
 
-      const splitText = pdf.splitTextToSize(sourceText, 180);
-      pdf.text(splitText, 15, 45);
+      const { blob, warnings } = await convertHtmlStringToPdf(html);
+      if (warnings.length > 0) setWarning(warnings.join(" "));
 
-      const blob = pdf.output("blob");
-      const fileName = `HTML_Converted_${Date.now()}.pdf`;
+      const outName =
+        activeTab === "file" && selectedFile
+          ? selectedFile.name.replace(/\.html?$/i, ".pdf")
+          : `HTML_Converted_${Date.now()}.pdf`;
+
+      if (urlRef.current) URL.revokeObjectURL(urlRef.current);
       const url = URL.createObjectURL(blob);
+      urlRef.current = url;
+
       setDownloadUrl(url);
-      setResultName(fileName);
-      addRecentFile({ name: fileName, toolUsed: "HTML to PDF", size: blob.size, downloadUrl: url });
+      setResultName(outName);
+      addRecentFile({ name: outName, toolUsed: "HTML to PDF", size: blob.size, downloadUrl: url });
+    } catch (err) {
+      console.error("HTML to PDF error:", err);
+      setError("Something went wrong generating the PDF. Check your HTML and try again.");
     } finally {
       setIsProcessing(false);
     }
   };
 
-  const reset = () => { setSelectedFile(null); setDownloadUrl(null); };
+  const reset = () => {
+    if (urlRef.current) URL.revokeObjectURL(urlRef.current);
+    urlRef.current = null;
+    setSelectedFile(null);
+    setDownloadUrl(null);
+    setWarning(null);
+    setError(null);
+  };
 
   return (
     <ConversionPageLayout
       title="HTML to PDF"
-      description="Convert raw HTML code or a webpage URL into a perfectly formatted PDF document."
-      badge="Web & HTML to PDF Converter"
-      accentClass="bg-sky-50 dark:bg-sky-950/40 text-sky-600 dark:text-sky-400 border-sky-100 dark:border-sky-900/40"
-      hoverBorderClass="hover:border-sky-500"
+      description="Convert raw HTML code or an uploaded .html file into a formatted PDF."
+      badge="HTML to PDF Converter"
       icon={Globe}
       acceptTypes=".html,.htm"
       inputId="html-pdf-input"
       actionLabel="Convert & Download PDF"
-      processingLabel="Generating PDF..."
+      processingLabel="Rendering HTML & building PDF..."
       selectedFile={selectedFile}
       isProcessing={isProcessing}
       downloadUrl={downloadUrl}
       resultName={resultName}
       downloadLabel="Download PDF"
+      canConvert={canConvert}
       onFileChange={handleFileChange}
       onConvert={convert}
       onReset={reset}
     >
-      {/* Tab switcher + input area */}
       <div className="space-y-3">
-        <div className="flex rounded-xl bg-slate-100 dark:bg-slate-800 p-1">
-          {(["code", "url"] as const).map((tab) => (
+        <div className="flex rounded-xl bg-background p-1 border border-border">
+          {(
+            [
+              { id: "code", label: "Raw HTML Code" },
+              { id: "file", label: "Uploaded File" },
+            ] as const
+          ).map((tab) => (
             <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`flex-1 py-2 text-xs font-bold rounded-lg transition ${
-                activeTab === tab
-                  ? "bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm"
-                  : "text-slate-500"
+              key={tab.id}
+              type="button"
+              onClick={() => {
+                setActiveTab(tab.id);
+                setDownloadUrl(null);
+                setError(null);
+              }}
+              className={`min-w-0 flex-1 py-2 px-1 text-[11px] font-bold rounded-lg transition sm:text-xs ${
+                activeTab === tab.id
+                  ? "bg-surface text-text-primary shadow-sm border border-border"
+                  : "text-text-secondary"
               }`}
             >
-              {tab === "code" ? "Raw HTML Code" : "Web Page URL"}
+              {tab.label}
             </button>
           ))}
         </div>
 
-        {activeTab === "url" ? (
+        {activeTab === "code" ? (
           <div>
-            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Enter Website URL:</label>
-            <input
-              type="url"
-              value={webUrl}
-              onChange={(e) => setWebUrl(e.target.value)}
-              placeholder="https://example.com"
-              className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100"
-            />
-          </div>
-        ) : (
-          <div>
-            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Paste HTML Code:</label>
+            <label className="block text-xs font-bold text-text-secondary mb-1">Paste HTML Code:</label>
             <textarea
               rows={8}
               value={htmlCode}
-              onChange={(e) => setHtmlCode(e.target.value)}
-              className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 p-3 text-xs font-mono text-slate-900 dark:text-slate-100"
+              onChange={(e) => {
+                setHtmlCode(e.target.value);
+                setDownloadUrl(null);
+                setError(null);
+              }}
+              className="w-full rounded-xl border border-border bg-background p-3 text-xs font-mono text-text-primary focus:outline-none focus:ring-2 focus:ring-brand"
             />
           </div>
+        ) : (
+          <p className="text-xs text-text-secondary">
+            {selectedFile
+              ? `Ready to convert: ${selectedFile.name}`
+              : "Use the upload area above to select an .html / .htm file."}
+          </p>
         )}
       </div>
+
+      {warning && (
+        <div className="flex items-start gap-2 mt-4 p-3 rounded-xl border border-amber-200 bg-amber-50 text-text-primary text-xs">
+          <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5 text-amber-600" />
+          <span>{warning}</span>
+        </div>
+      )}
+
+      {error && (
+        <div className="flex items-start gap-2 mt-4 p-3 rounded-xl border border-red-300 bg-red-50 text-brand text-xs">
+          <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
+          <span>{error}</span>
+        </div>
+      )}
     </ConversionPageLayout>
   );
 }

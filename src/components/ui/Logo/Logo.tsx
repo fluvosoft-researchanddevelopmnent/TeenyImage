@@ -12,11 +12,11 @@ export function Logo({ className }: LogoProps) {
     <Link
       href="/"
       className={cn(
-        "inline-flex items-center gap-1 no-underline text-[#333] hover:text-[#333]",
+        "inline-flex items-center gap-1 no-underline text-brand hover:text-brand-dark",
         className,
       )}
     >
-      <span className="text-[26px] font-bold leading-none tracking-tight">{APP_NAME}</span>
+      <span className="text-[22px] font-bold leading-none tracking-tight sm:text-[26px]">{APP_NAME}</span>
     </Link>
   );
 }

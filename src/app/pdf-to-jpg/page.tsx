@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ImageIcon, Upload, Download, Check, RefreshCw, Trash2 } from "lucide-react";
+import { ImageIcon, Upload, Download, RefreshCw } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 
 interface RenderedPage {
@@ -101,20 +101,19 @@ export default function PdfToJpgPage() {
   };
 
   return (
-    <div className="min-h-screen py-10 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
-      <div className="text-center max-w-2xl mx-auto mb-8">
-        <div className="inline-flex items-center gap-2 rounded-full bg-amber-50 dark:bg-amber-950/40 px-3.5 py-1 text-xs font-bold text-amber-600 dark:text-amber-400 mb-3 border border-amber-100 dark:border-amber-900/40">
-          <ImageIcon size={14} /> PDF to JPG Converter
+    <div className="min-h-[calc(100dvh-8rem)] w-full max-w-6xl mx-auto overflow-x-hidden bg-background px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
+      <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
+        <div className="inline-flex max-w-full items-center gap-2 rounded-full bg-red-50 px-3 py-1 text-[11px] font-bold text-brand mb-3 border border-red-100 sm:px-3.5 sm:text-xs">
+          <ImageIcon size={14} className="shrink-0" /> <span className="truncate">PDF to JPG Converter</span>
         </div>
-        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white">PDF to JPG Images</h1>
-        <p className="text-xs text-slate-500 mt-2">
+        <h1 className="text-2xl font-extrabold text-text-primary sm:text-3xl">PDF to JPG Images</h1>
+        <p className="text-xs text-text-secondary mt-2 sm:text-sm">
           Renders every page of your PDF as a real high-resolution JPG image. Download individually or as a ZIP.
         </p>
       </div>
 
-      <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-xl space-y-6">
-        {/* Upload */}
-        <div className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl p-8 text-center hover:border-amber-500 transition">
+      <div className="bg-surface rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border border-border shadow-xl space-y-5 sm:space-y-6">
+        <div className="border-2 border-dashed border-border rounded-2xl p-6 sm:p-8 text-center hover:border-brand transition">
           <input
             type="file"
             accept=".pdf"
@@ -122,35 +121,34 @@ export default function PdfToJpgPage() {
             id="pdf-jpg-input"
             className="hidden"
           />
-          <label htmlFor="pdf-jpg-input" className="cursor-pointer flex flex-col items-center gap-3">
-            <div className="h-12 w-12 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 flex items-center justify-center">
+          <label htmlFor="pdf-jpg-input" className="cursor-pointer flex flex-col items-center gap-3 min-w-0">
+            <div className="h-12 w-12 rounded-2xl bg-red-50 text-brand flex items-center justify-center">
               <Upload size={24} />
             </div>
-            <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
+            <p className="text-sm font-bold text-text-primary max-w-full truncate px-1">
               {selectedFile ? selectedFile.name : "Click to select PDF file"}
             </p>
           </label>
         </div>
 
-        {/* Quality/Scale settings */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
-            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-2">
+            <label className="block text-xs font-bold text-text-secondary mb-2">
               JPEG Quality: {Math.round(quality * 100)}%
             </label>
             <input type="range" min="0.5" max="1" step="0.05" value={quality}
               onChange={(e) => setQuality(parseFloat(e.target.value))}
-              className="w-full accent-amber-500" />
+              className="w-full accent-brand" />
           </div>
           <div>
-            <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-2">
+            <label className="block text-xs font-bold text-text-secondary mb-2">
               Resolution Scale: {scale}× {scale === 1 ? "(72dpi)" : scale === 2 ? "(144dpi)" : "(216dpi)"}
             </label>
             <div className="flex gap-2">
               {[1, 2, 3].map((s) => (
                 <button key={s} onClick={() => setScale(s)}
                   className={`flex-1 py-2 rounded-xl text-xs font-bold border transition ${
-                    scale === s ? "bg-amber-50 border-amber-500 text-amber-700 dark:bg-amber-950/40" : "border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300"
+                    scale === s ? "bg-red-50 border-brand text-brand" : "border-border text-text-secondary"
                   }`}
                 >
                   {s}×
@@ -160,11 +158,10 @@ export default function PdfToJpgPage() {
           </div>
         </div>
 
-        {/* Convert button */}
         <button
           onClick={renderPages}
           disabled={!selectedFile || isProcessing}
-          className="w-full py-4 rounded-2xl bg-[#e5322d] text-white text-sm font-bold shadow-lg hover:bg-[#d42b26] disabled:opacity-50 transition flex items-center justify-center gap-2"
+          className="w-full py-4 rounded-2xl bg-brand text-white text-sm font-bold shadow-lg hover:bg-brand-dark disabled:opacity-50 transition flex items-center justify-center gap-2"
         >
           {isProcessing ? (
             <><RefreshCw size={18} className="animate-spin" />
@@ -174,27 +171,25 @@ export default function PdfToJpgPage() {
           )}
         </button>
 
-        {/* Progress bar */}
         {isProcessing && progress && (
-          <div className="h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+          <div className="h-2 bg-red-50 rounded-full overflow-hidden">
             <div
-              className="h-full bg-amber-500 transition-all"
+              className="h-full bg-brand transition-all"
               style={{ width: `${(progress.done / progress.total) * 100}%` }}
             />
           </div>
         )}
 
-        {/* Results */}
         {pages.length > 0 && (
           <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-slate-800 dark:text-slate-100">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <h3 className="text-sm font-bold text-text-primary">
                 {pages.length} page{pages.length !== 1 ? "s" : ""} rendered
               </h3>
               <button
                 onClick={downloadAll}
                 disabled={isZipping}
-                className="inline-flex items-center gap-2 rounded-xl bg-amber-500 text-white px-5 py-2 text-xs font-bold hover:bg-amber-600 disabled:opacity-50 transition"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand text-white px-5 py-2 text-xs font-bold hover:bg-brand-dark disabled:opacity-50 transition sm:w-auto"
               >
                 {isZipping ? <><RefreshCw size={14} className="animate-spin" /> Zipping...</> : <><Download size={14} /> Download All as ZIP</>}
               </button>
@@ -202,17 +197,17 @@ export default function PdfToJpgPage() {
 
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {pages.map((p) => (
-                <div key={p.pageNum} className="group relative rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition">
+                <div key={p.pageNum} className="group relative rounded-xl overflow-hidden border border-border shadow-sm hover:shadow-md transition">
                   <img
                     src={p.dataUrl}
                     alt={`Page ${p.pageNum}`}
                     className="w-full block object-cover"
                     style={{ maxHeight: 200 }}
                   />
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                  <div className="absolute inset-0 bg-black/40 opacity-100 transition flex items-end justify-center pb-8 sm:bg-black/50 sm:opacity-0 sm:items-center sm:pb-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100">
                     <button
                       onClick={() => downloadSingle(p)}
-                      className="flex items-center gap-1 bg-white rounded-lg px-3 py-1.5 text-xs font-bold text-slate-900 hover:bg-slate-100"
+                      className="flex items-center gap-1 bg-surface rounded-lg px-3 py-1.5 text-xs font-bold text-text-primary hover:bg-red-50"
                     >
                       <Download size={13} /> Page {p.pageNum}
                     </button>

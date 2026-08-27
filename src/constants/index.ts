@@ -13,6 +13,7 @@ export const HERO_FILTERS = [
   "All",
   "PDF to Other",
   "Other to PDF",
+  "Edit PDF",
 ] as const;
 
 export const HERO_CONTENT = {

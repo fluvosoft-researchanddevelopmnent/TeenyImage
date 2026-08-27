@@ -17,8 +17,8 @@ export function FilterChip({ label, active = false, onClick, className }: Filter
       className={cn(
         "shrink-0 rounded-full border px-3.5 py-2 text-sm font-medium transition-colors lg:px-3",
         active
-          ? "border-[#333] bg-[#333] text-white"
-          : "border-[#e8e8e8] bg-white text-[#555] hover:border-[#d0d0d0] hover:bg-[#fafafa]",
+          ? "border-brand bg-brand text-white"
+          : "border-border bg-surface text-text-secondary hover:border-brand/40 hover:bg-red-50",
         className,
       )}
     >

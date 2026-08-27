@@ -1,15 +1,18 @@
 @import "tailwindcss";
 
+/* Light mode only — never activate dark: variants via OS preference */
+@custom-variant dark (&:where(.never-dark *));
+
 @theme {
   --color-brand: #e5322d;
   --color-brand-dark: #d42b26;
   --color-primary: #e5322d;
   --color-primary-dark: #d42b26;
-  --color-secondary: #9c27b0;
-  --color-background: #f5f5fa;
+  --color-background: #faf9f7;
   --color-surface: #ffffff;
-  --color-text-primary: #333333;
-  --color-text-secondary: #666666;
+  --color-text-primary: #000000;
+  --color-text-secondary: #333333;
+  --color-border: #e8e6e3;
 
   --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
@@ -24,9 +27,10 @@
 
   html {
     scroll-behavior: smooth;
+    color-scheme: light only;
   }
 
   body {
-    @apply bg-background text-text-primary antialiased;
+    @apply bg-background text-text-primary antialiased overflow-x-hidden;
   }
 }

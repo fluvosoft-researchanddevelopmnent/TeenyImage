@@ -4,9 +4,6 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import type { ProcessedFileRecord } from "@/types";
 
 interface AppContextType {
-  darkMode: boolean;
-  setDarkMode: (value: boolean | ((prev: boolean) => boolean)) => void;
-  toggleDarkMode: () => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   recentFiles: ProcessedFileRecord[];
@@ -17,18 +14,13 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [darkMode, setDarkMode] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [recentFiles, setRecentFiles] = useState<ProcessedFileRecord[]>([]);
 
-  // Initialize from LocalStorage
   useEffect(() => {
     try {
-      const savedTheme = localStorage.getItem("teenypdf_theme");
-      if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-        setDarkMode(true);
-        document.documentElement.classList.add("dark");
-      }
+      document.documentElement.classList.remove("dark");
+      localStorage.removeItem("teenypdf_theme");
 
       const savedRecent = localStorage.getItem("teenypdf_recent_files");
       if (savedRecent) {
@@ -38,20 +30,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       // Ignore SSR localStorage errors
     }
   }, []);
-
-  const toggleDarkMode = () => {
-    setDarkMode((prev) => {
-      const next = !prev;
-      if (next) {
-        document.documentElement.classList.add("dark");
-        localStorage.setItem("teenypdf_theme", "dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-        localStorage.setItem("teenypdf_theme", "light");
-      }
-      return next;
-    });
-  };
 
   const addRecentFile = (file: Omit<ProcessedFileRecord, "id" | "processedAt">) => {
     const newRecord: ProcessedFileRecord = {
@@ -79,9 +57,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   return (
     <AppContext.Provider
       value={{
-        darkMode,
-        setDarkMode,
-        toggleDarkMode,
         searchQuery,
         setSearchQuery,
         recentFiles,

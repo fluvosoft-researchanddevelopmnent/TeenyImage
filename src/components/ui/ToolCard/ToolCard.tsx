@@ -17,7 +17,7 @@ export function ToolCard({ tool, className }: ToolCardProps) {
       <Paper
         elevation={0}
         className={cn(
-          "group h-full rounded-xl border border-[#ececec] bg-white p-5 transition-all hover:border-[#ddd] hover:shadow-md",
+          "group h-full rounded-xl border border-border bg-surface p-4 transition-all hover:border-brand/30 hover:shadow-md sm:p-5",
           className,
         )}
       >
@@ -32,17 +32,17 @@ export function ToolCard({ tool, className }: ToolCardProps) {
           </div>
 
           {tool.isNew && (
-            <span className="rounded-full bg-[#e5322d] px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-white">
+            <span className="rounded-full bg-brand px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-white">
               New!
             </span>
           )}
         </div>
 
-        <Typography variant="h6" component="h3" className="mb-2 text-base font-semibold text-[#333]">
+        <Typography variant="h6" component="h3" className="mb-2 text-base font-semibold text-text-primary">
           {tool.title}
         </Typography>
 
-        <Typography variant="body2" className="text-sm leading-relaxed text-[#666]">
+        <Typography variant="body2" className="text-sm leading-relaxed text-text-secondary">
           {tool.description}
         </Typography>
       </Paper>

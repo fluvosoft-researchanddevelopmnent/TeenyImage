@@ -3,77 +3,218 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FileText, AlertTriangle } from "lucide-react";
 import { PDFDocument } from "pdf-lib";
+import {
+  AlignmentType,
+  Document,
+  ExternalHyperlink,
+  Packer,
+  PageBreak,
+  Paragraph,
+  TextRun,
+  convertInchesToTwip,
+  type ParagraphChild,
+} from "docx";
 import { useApp } from "@/context/AppContext";
 import { ConversionPageLayout } from "@/components/common";
+import {
+  extractLayoutText,
+  type LayoutParagraph,
+  type LayoutRun,
+} from "@/lib/pdf/extractLayoutText";
 
-// ── DOCX builder ──────────────────────────────────────────────────────────────
-// NOTE: We avoid referencing named styles (e.g. Heading1) because that requires
-// a matching word/styles.xml entry — omit it and some validators (Word's strict
-// mode, Google Docs, LibreOffice) will flag the file as needing repair. Instead
-// we apply direct run formatting (bold + larger size) which needs no style part.
-async function buildDocxBlob(fileName: string, rawText: string, pageCount: number): Promise<Blob> {
-  const paragraphs = rawText
-    .split(/\n+/)
-    .filter((l) => l.trim().length > 0)
-    .map((line) => {
-      const escaped = line
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
-      return `<w:p><w:r><w:t xml:space="preserve">${escaped}</w:t></w:r></w:p>`;
-    })
-    .join("\n");
-
-  const escapedFileName = fileName.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-  const docXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<w:document xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
-            xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
-            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
-  <w:body>
-    <w:p>
-      <w:r><w:rPr><w:b/><w:sz w:val="44"/></w:rPr>
-        <w:t xml:space="preserve">${escapedFileName}</w:t>
-      </w:r>
-    </w:p>
-    <w:p>
-      <w:r><w:rPr><w:color w:val="888888"/><w:sz w:val="18"/></w:rPr>
-        <w:t>Converted by TeenyPDF — ${pageCount} page(s) | ${new Date().toLocaleDateString()}</w:t>
-      </w:r>
-    </w:p>
-    <w:p><w:r><w:t></w:t></w:r></w:p>
-    ${paragraphs}
-    <w:sectPr><w:pgSz w:w="12240" w:h="15840"/></w:sectPr>
-  </w:body>
-</w:document>`;
-
-  const JSZip = (await import("jszip")).default;
-  const zip = new JSZip();
-
-  zip.file("[Content_Types].xml", `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
-  <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
-  <Default Extension="xml" ContentType="application/xml"/>
-  <Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>
-</Types>`);
-
-  zip.file("_rels/.rels", `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-  <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>
-</Relationships>`);
-
-  zip.file("word/document.xml", docXml);
-  zip.file("word/_rels/document.xml.rels", `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-</Relationships>`);
-
-  return zip.generateAsync({
-    type: "blob",
-    mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-  });
+/** PDF points → Word half-points (sz attribute uses half-points). */
+function toHalfPoints(pdfPoints: number): number {
+  return Math.max(16, Math.round(pdfPoints * 2));
 }
 
-// ── Page ──────────────────────────────────────────────────────────────────────
+/** PDF points → twips (1pt = 20 twips). Cap indent so wide pages don't explode. */
+function toIndentTwip(pdfPoints: number): number {
+  return Math.min(convertInchesToTwip(2.5), Math.max(0, Math.round(pdfPoints * 20)));
+}
+
+function isHeading(fontSize: number, bodyFontSize: number): "title" | "heading" | "subheading" | null {
+  if (fontSize >= bodyFontSize * 1.85) return "title";
+  if (fontSize >= bodyFontSize * 1.45) return "heading";
+  if (fontSize >= bodyFontSize * 1.2) return "subheading";
+  return null;
+}
+
+function runsToParagraphChildren(runs: LayoutRun[], forceBold = false): ParagraphChild[] {
+  const children: ParagraphChild[] = [];
+
+  for (const run of runs) {
+    const textRun = new TextRun({
+      text: run.text,
+      bold: forceBold || run.bold,
+      italics: run.italic,
+      size: toHalfPoints(run.fontSize),
+      font: run.fontFamily || "Calibri",
+      ...(run.href
+        ? {
+            color: "0563C1",
+            underline: {},
+          }
+        : {}),
+    });
+
+    if (run.href) {
+      children.push(
+        new ExternalHyperlink({
+          link: run.href,
+          children: [textRun],
+        })
+      );
+    } else {
+      children.push(textRun);
+    }
+  }
+
+  return children;
+}
+
+function paragraphToDocx(p: LayoutParagraph, bodyFontSize: number, isFirst: boolean): Paragraph[] {
+  const heading = isHeading(p.fontSize, bodyFontSize);
+  const gapTwip = Math.min(400, Math.round(p.gapBefore * 20));
+  const indent = toIndentTwip(p.x);
+
+  const spacing = {
+    before: isFirst ? 0 : Math.max(heading ? 160 : 40, gapTwip),
+    after: heading ? 120 : 60,
+    line: 276,
+    lineRule: "auto" as const,
+  };
+
+  const body = new Paragraph({
+    spacing: p.pageBreakBefore
+      ? { before: 0, after: spacing.after, line: spacing.line, lineRule: spacing.lineRule }
+      : spacing,
+    indent: indent > 80 ? { left: indent } : undefined,
+    alignment: heading === "title" ? AlignmentType.CENTER : AlignmentType.LEFT,
+    children: runsToParagraphChildren(p.runs, Boolean(heading)),
+  });
+
+  if (p.pageBreakBefore) {
+    return [new Paragraph({ children: [new PageBreak()] }), body];
+  }
+  return [body];
+}
+
+async function buildDocxFromLayout(
+  fileName: string,
+  paragraphs: LayoutParagraph[],
+  pageCount: number,
+  bodyFontSize: number
+): Promise<Blob> {
+  const children: Paragraph[] = [
+    new Paragraph({
+      spacing: { after: 80 },
+      children: [
+        new TextRun({
+          text: fileName.replace(/\.pdf$/i, ""),
+          bold: true,
+          size: 32,
+          font: "Calibri",
+        }),
+      ],
+    }),
+    new Paragraph({
+      spacing: { after: 240 },
+      children: [
+        new TextRun({
+          text: `Converted by TeenyPDF — ${pageCount} page(s) · ${new Date().toLocaleDateString()}`,
+          size: 16,
+          color: "888888",
+          font: "Calibri",
+        }),
+      ],
+    }),
+  ];
+
+  paragraphs.forEach((p, index) => {
+    children.push(...paragraphToDocx(p, bodyFontSize, index === 0));
+  });
+
+  const doc = new Document({
+    creator: "TeenyPDF",
+    description: "Converted from PDF with layout-aware text extraction",
+    sections: [
+      {
+        properties: {
+          page: {
+            margin: {
+              top: convertInchesToTwip(0.75),
+              bottom: convertInchesToTwip(0.75),
+              left: convertInchesToTwip(0.85),
+              right: convertInchesToTwip(0.85),
+            },
+          },
+        },
+        children,
+      },
+    ],
+  });
+
+  return Packer.toBlob(doc);
+}
+
+function escapeRtf(text: string): string {
+  return text
+    .replace(/\\/g, "\\\\")
+    .replace(/\{/g, "\\{")
+    .replace(/\}/g, "\\}")
+    .replace(/\n/g, "\\par\n")
+    .replace(/\t/g, "\\tab ");
+}
+
+function buildRtfFromLayout(
+  fileName: string,
+  paragraphs: LayoutParagraph[],
+  pageCount: number,
+  bodyFontSize: number
+): Blob {
+  const chunks: string[] = [
+    "{\\rtf1\\ansi\\deff0",
+    "{\\fonttbl{\\f0 Calibri;}}",
+    "{\\colortbl;\\red136\\green136\\blue136;\\red5\\green99\\blue193;}",
+    "\\f0\\fs22",
+    `{\\b\\fs32 ${escapeRtf(fileName.replace(/\.pdf$/i, ""))}\\b0\\par}`,
+    `{\\cf1\\fs16 Converted by TeenyPDF — ${pageCount} page(s)\\par}`,
+    "\\par",
+  ];
+
+  for (const p of paragraphs) {
+    if (p.pageBreakBefore) chunks.push("\\page");
+    if (p.gapBefore > bodyFontSize * 1.2) chunks.push("\\par");
+
+    const indentTwip = toIndentTwip(p.x);
+    if (indentTwip > 80) chunks.push(`\\li${indentTwip}`);
+
+    const heading = isHeading(p.fontSize, bodyFontSize);
+    for (const run of p.runs) {
+      const fs = toHalfPoints(run.fontSize);
+      const styles = [
+        `\\fs${fs}`,
+        run.bold || heading ? "\\b" : "",
+        run.italic ? "\\i" : "",
+        run.href ? "\\ul\\cf2" : "",
+      ]
+        .filter(Boolean)
+        .join("");
+      const styled = `{${styles} ${escapeRtf(run.text)}${run.href ? "\\ulnone" : ""}${run.bold || heading ? "\\b0" : ""}${run.italic ? "\\i0" : ""}}`;
+      if (run.href) {
+        const safeUrl = run.href.replace(/\\/g, "\\\\").replace(/"/g, "");
+        chunks.push(`{\\field{\\*\\fldinst HYPERLINK "${safeUrl}"}{\\fldrslt ${styled}}}`);
+      } else {
+        chunks.push(styled);
+      }
+    }
+    chunks.push("\\par\n");
+  }
+
+  chunks.push("}");
+  return new Blob([chunks.join("")], { type: "application/rtf" });
+}
+
 export default function PdfToWordPage() {
   const { addRecentFile } = useApp();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -84,7 +225,6 @@ export default function PdfToWordPage() {
   const [warning, setWarning] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // Track the blob URL so we can revoke it on cleanup/replace instead of leaking it.
   const urlRef = useRef<string | null>(null);
 
   useEffect(() => {
@@ -110,45 +250,67 @@ export default function PdfToWordPage() {
     try {
       const arrayBuffer = await selectedFile.arrayBuffer();
       let pageCount = 1;
-      let rawText = "";
       let extractionFailed = false;
+      let paragraphs: LayoutParagraph[] = [];
+      let bodyFontSize = 11;
 
       try {
         const pdfDoc = await PDFDocument.load(arrayBuffer);
         pageCount = pdfDoc.getPageCount();
       } catch {
-        // pdf-lib couldn't parse it — file may be corrupted or encrypted.
-        // We still try pdf.js below in case it can handle it.
+        // Still try pdf.js below.
       }
 
       try {
-        const pdfjsLib = await import("pdfjs-dist");
-        // Pin the worker to the exact installed pdfjs-dist version so it never
-        // silently mismatches the API version (which throws and was previously
-        // swallowed, producing a placeholder doc with no real content).
-        pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
+        const layout = await extractLayoutText(arrayBuffer);
+        pageCount = layout.pageCount || pageCount;
+        paragraphs = layout.paragraphs;
+        bodyFontSize = layout.bodyFontSize;
 
-        const pdfJsDoc = await pdfjsLib.getDocument({ data: arrayBuffer.slice(0) }).promise;
-        const texts: string[] = [];
-        for (let i = 1; i <= pdfJsDoc.numPages; i++) {
-          const page = await pdfJsDoc.getPage(i);
-          const content = await page.getTextContent();
-          const pageText = content.items.map((item: any) => ("str" in item ? item.str : "")).join(" ");
-          texts.push(`--- Page ${i} ---\n${pageText}`);
-        }
-        rawText = texts.join("\n\n");
-
-        // A PDF made entirely of scanned images will parse fine but yield no
-        // extractable text — flag that clearly instead of silently returning
-        // an (almost) empty document.
-        if (rawText.replace(/--- Page \d+ ---/g, "").trim().length === 0) {
+        if (!layout.hasText) {
           extractionFailed = true;
-          rawText = `No selectable text was found in ${selectedFile.name}. This usually means the PDF is a scanned image — it needs OCR before it can be converted to editable text.`;
+          paragraphs = [
+            {
+              runs: [
+                {
+                  text: `No selectable text was found in ${selectedFile.name}. This usually means the PDF is a scanned image — it needs OCR before it can be converted to editable text.`,
+                  fontSize: 11,
+                  bold: false,
+                  italic: false,
+                  fontFamily: "Calibri",
+                },
+              ],
+              x: 0,
+              y: 0,
+              fontSize: 11,
+              gapBefore: 0,
+              pageBreakBefore: false,
+              pageNumber: 1,
+            },
+          ];
         }
       } catch (extractErr) {
-        console.error("Text extraction failed:", extractErr);
+        console.error("Layout extraction failed:", extractErr);
         extractionFailed = true;
-        rawText = `Text could not be extracted from ${selectedFile.name} (page count: ${pageCount}). The file may be corrupted, password-protected, or in an unsupported PDF format.`;
+        paragraphs = [
+          {
+            runs: [
+              {
+                text: `Text could not be extracted from ${selectedFile.name} (page count: ${pageCount}). The file may be corrupted, password-protected, or in an unsupported PDF format.`,
+                fontSize: 11,
+                bold: false,
+                italic: false,
+                fontFamily: "Calibri",
+              },
+            ],
+            x: 0,
+            y: 0,
+            fontSize: 11,
+            gapBefore: 0,
+            pageBreakBefore: false,
+            pageNumber: 1,
+          },
+        ];
       }
 
       if (extractionFailed) {
@@ -161,11 +323,10 @@ export default function PdfToWordPage() {
       let ext: string;
 
       if (outputFormat === "docx") {
-        blob = await buildDocxBlob(selectedFile.name, rawText, pageCount);
+        blob = await buildDocxFromLayout(selectedFile.name, paragraphs, pageCount, bodyFontSize);
         ext = "docx";
       } else {
-        const rtfContent = `{\\rtf1\\ansi\\deff0\n{\\fonttbl{\\f0 Arial;}}\n\\f0\\fs24\n{\\b\\fs32 ${selectedFile.name.replace(/[{}\\]/g, "")}\\b0\\par}\n\\par\n${rawText.replace(/[{}\\]/g, "").replace(/\n/g, "\\par\n")}\n}`;
-        blob = new Blob([rtfContent], { type: "application/rtf" });
+        blob = buildRtfFromLayout(selectedFile.name, paragraphs, pageCount, bodyFontSize);
         ext = "rtf";
       }
 
@@ -198,15 +359,13 @@ export default function PdfToWordPage() {
   return (
     <ConversionPageLayout
       title="PDF to Word (DOC / DOCX)"
-      description="Converts PDF text content into a properly structured, editable Word document (.docx) or RTF."
+      description="Converts PDF into an editable Word document, reconstructing lines, spacing, headings, hyperlinks, and basic text styles from the original layout."
       badge="PDF to Word Converter"
-      accentClass="bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border-blue-100 dark:border-blue-900/40"
-      hoverBorderClass="hover:border-blue-500"
       icon={FileText}
       acceptTypes=".pdf"
       inputId="pdf-word-input"
       actionLabel={`Convert PDF to ${outputFormat.toUpperCase()}`}
-      processingLabel="Extracting text & building document..."
+      processingLabel="Reconstructing layout & building document..."
       selectedFile={selectedFile}
       isProcessing={isProcessing}
       downloadUrl={downloadUrl}
@@ -216,36 +375,38 @@ export default function PdfToWordPage() {
       onConvert={convert}
       onReset={reset}
     >
-      {/* Format picker */}
       <div>
-        <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-2">Output Format:</label>
-        <div className="flex gap-3">
+        <label className="block text-xs font-bold text-text-secondary mb-2">Output Format:</label>
+        <div className="flex flex-col gap-2 sm:flex-row sm:gap-3">
           {(["docx", "rtf"] as const).map((fmt) => (
             <button
               key={fmt}
               type="button"
               onClick={() => setOutputFormat(fmt)}
-              className={`flex-1 py-3 rounded-xl text-xs font-bold transition border ${
+              className={`w-full flex-1 py-3 px-3 rounded-xl text-xs font-bold transition border text-left sm:text-center ${
                 outputFormat === fmt
-                  ? "bg-blue-50 dark:bg-blue-950/40 border-blue-500 text-blue-700 dark:text-blue-300"
-                  : "border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                  ? "bg-red-50 border-brand text-brand"
+                  : "border-border text-text-secondary hover:bg-red-50"
               }`}
             >
-              {fmt === "docx" ? ".DOCX — Microsoft Word (recommended)" : ".RTF — Rich Text Format"}
+              <span className="sm:hidden">{fmt === "docx" ? ".DOCX (recommended)" : ".RTF"}</span>
+              <span className="hidden sm:inline">
+                {fmt === "docx" ? ".DOCX — Microsoft Word (recommended)" : ".RTF — Rich Text Format"}
+              </span>
             </button>
           ))}
         </div>
       </div>
 
       {warning && (
-        <div className="flex items-start gap-2 mt-4 p-3 rounded-xl border border-amber-300 bg-amber-50 dark:bg-amber-950/30 dark:border-amber-900/50 text-amber-800 dark:text-amber-300 text-xs">
-          <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
+        <div className="flex items-start gap-2 mt-4 p-3 rounded-xl border border-amber-200 bg-amber-50 text-text-primary text-xs">
+          <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5 text-amber-600" />
           <span>{warning}</span>
         </div>
       )}
 
       {error && (
-        <div className="flex items-start gap-2 mt-4 p-3 rounded-xl border border-red-300 bg-red-50 dark:bg-red-950/30 dark:border-red-900/50 text-red-800 dark:text-red-300 text-xs">
+        <div className="flex items-start gap-2 mt-4 p-3 rounded-xl border border-red-300 bg-red-50 text-brand text-xs">
           <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
           <span>{error}</span>
         </div>

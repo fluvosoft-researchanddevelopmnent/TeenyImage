@@ -1,16 +1,11 @@
-import { PDFDocument } from "pdf-lib";
+import { convertToPdfA as convertBytesToPdfA } from "./convertToPdfA";
 
 /**
- * Converts PDF to ISO-standardized PDF/A archival format.
+ * Converts PDF to an archive-oriented PDF/A-style document.
+ * @deprecated Prefer convertToPdfA from convertToPdfA.ts with ArrayBuffer.
  */
 export async function convertToPdfA(file: File): Promise<Blob> {
   const arrayBuffer = await file.arrayBuffer();
-  const pdfDoc = await PDFDocument.load(arrayBuffer);
-
-  pdfDoc.setTitle(file.name.replace(".pdf", ""));
-  pdfDoc.setProducer("TeenyPDF ISO-19005-1 Archival Engine");
-  pdfDoc.setCreationDate(new Date());
-
-  const pdfBytes = await pdfDoc.save({ useObjectStreams: true });
-  return new Blob([pdfBytes.buffer as ArrayBuffer], { type: "application/pdf" });
+  const { blob } = await convertBytesToPdfA(arrayBuffer, file.name);
+  return blob;
 }

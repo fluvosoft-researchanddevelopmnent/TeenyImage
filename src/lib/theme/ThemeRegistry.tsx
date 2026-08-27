@@ -14,7 +14,7 @@ export function ThemeRegistry({ children }: ThemeRegistryProps) {
   return (
     <AppRouterCacheProvider options={{ enableCssLayer: true }}>
       <ThemeProvider theme={theme}>
-        <CssBaseline enableColorScheme />
+        <CssBaseline />
         {children}
       </ThemeProvider>
     </AppRouterCacheProvider>

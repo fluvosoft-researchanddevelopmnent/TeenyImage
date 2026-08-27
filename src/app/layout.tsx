@@ -32,12 +32,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth" className={poppins.variable}>
       <body
         suppressHydrationWarning
-        className="min-h-screen flex flex-col font-sans bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-200"
+        className="min-h-screen flex flex-col font-sans bg-background text-text-primary"
       >
         <AppProvider>
           <ThemeRegistry>
             <Header />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 min-w-0 overflow-x-hidden">{children}</main>
             <Footer />
           </ThemeRegistry>
         </AppProvider>

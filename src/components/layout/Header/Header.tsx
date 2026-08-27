@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { ChevronDown, Moon, Search, Sun } from "lucide-react";
+import { ChevronDown, Menu, Search, X } from "lucide-react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 
@@ -12,8 +12,9 @@ import { NAV_LINKS, PDF_TOOLS } from "@/constants";
 import { useApp } from "@/context/AppContext";
 
 export function Header() {
-  const { darkMode, toggleDarkMode, searchQuery, setSearchQuery } = useApp();
+  const { searchQuery, setSearchQuery } = useApp();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const searchResults = searchQuery.trim()
     ? PDF_TOOLS.filter(
@@ -23,23 +24,42 @@ export function Header() {
       )
     : [];
 
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 1024) setIsMobileMenuOpen(false);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
+
   return (
     <AppBar
       position="sticky"
       elevation={0}
-      className="border-b border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md transition-colors"
+      className="border-b border-border bg-background/90 backdrop-blur-md"
       color="inherit"
     >
       <Container as="div">
-        <Toolbar disableGutters className="min-h-[64px] gap-3 lg:gap-4">
-          <Logo />
+        <Toolbar disableGutters className="min-h-[56px] gap-2 sm:min-h-[64px] sm:gap-3 lg:gap-4">
+          <Logo className="shrink-0" />
 
           <nav className="hidden items-center gap-4 lg:flex xl:gap-5">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
-                className="inline-flex items-center gap-1 text-[13px] font-semibold tracking-wide text-slate-600 dark:text-slate-300 no-underline transition-colors hover:text-slate-900 dark:hover:text-white"
+                className="inline-flex items-center gap-1 text-[13px] font-semibold tracking-wide text-text-secondary no-underline transition-colors hover:text-brand"
               >
                 {link.label}
                 {"hasDropdown" in link && link.hasDropdown && (
@@ -49,27 +69,27 @@ export function Header() {
             ))}
           </nav>
 
-          {/* In-App File & Tool Search Bar */}
-          <div className="relative flex-1 max-w-xs mx-2">
+          <div className="relative ml-auto min-w-0 flex-1 max-w-[10rem] sm:max-w-xs">
             <div className="relative">
-              <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+              <Search size={15} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-text-secondary/50 sm:left-3" />
               <input
                 type="text"
-                placeholder="Search tools & files..."
+                placeholder="Search..."
                 value={searchQuery}
                 onFocus={() => setIsSearchOpen(true)}
+                onBlur={() => setTimeout(() => setIsSearchOpen(false), 150)}
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
                   setIsSearchOpen(true);
                 }}
-                className="w-full rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 pl-9 pr-3 py-1.5 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-red-500 transition"
+                aria-label="Search tools and files"
+                className="w-full rounded-full border border-border bg-surface py-1.5 pl-8 pr-2 text-xs text-text-primary placeholder:text-text-secondary/40 focus:outline-none focus:ring-2 focus:ring-brand sm:pl-9 sm:pr-3"
               />
             </div>
 
-            {/* Search Results Dropdown */}
             {isSearchOpen && searchResults.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-2 z-50 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-2 shadow-xl max-h-80 overflow-y-auto">
-                <p className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+              <div className="absolute top-full right-0 left-0 z-50 mt-2 max-h-80 overflow-y-auto rounded-2xl border border-border bg-surface p-2 shadow-xl sm:left-0 sm:right-0">
+                <p className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-text-secondary/60">
                   Matching Tools ({searchResults.length})
                 </p>
                 {searchResults.map((tool) => (
@@ -79,13 +99,14 @@ export function Header() {
                     onClick={() => {
                       setIsSearchOpen(false);
                       setSearchQuery("");
+                      closeMobileMenu();
                     }}
-                    className="flex items-center gap-2.5 rounded-xl p-2 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 no-underline transition"
+                    className="flex items-center gap-2.5 rounded-xl p-2 text-xs font-medium text-text-primary no-underline transition hover:bg-red-50"
                   >
-                    <tool.icon size={16} className="text-red-500 shrink-0" />
+                    <tool.icon size={16} className="shrink-0 text-brand" />
                     <div className="min-w-0">
                       <p className="font-semibold leading-tight">{tool.title}</p>
-                      <p className="text-[10px] text-slate-400 truncate">{tool.description}</p>
+                      <p className="truncate text-[10px] text-text-secondary/60">{tool.description}</p>
                     </div>
                   </Link>
                 ))}
@@ -93,18 +114,37 @@ export function Header() {
             )}
           </div>
 
-          <div className="ml-auto flex items-center gap-2">
-            {/* Dark Mode Toggle */}
-            <button
-              onClick={toggleDarkMode}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
-              title="Toggle Dark Mode"
-            >
-              {darkMode ? <Sun size={17} className="text-amber-400" /> : <Moon size={17} />}
-            </button>
-          </div>
+          <button
+            type="button"
+            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-text-secondary transition hover:bg-red-50 hover:text-brand lg:hidden"
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
+            onClick={() => setIsMobileMenuOpen((open) => !open)}
+          >
+            {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
         </Toolbar>
       </Container>
+
+      {isMobileMenuOpen && (
+        <div className="border-t border-border bg-surface lg:hidden">
+          <nav className="mx-auto flex max-h-[min(70vh,28rem)] w-full flex-col overflow-y-auto px-4 py-3 sm:px-6">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                onClick={closeMobileMenu}
+                className="flex items-center justify-between rounded-xl px-3 py-3 text-sm font-semibold text-text-primary no-underline transition hover:bg-red-50 hover:text-brand"
+              >
+                <span>{link.label}</span>
+                {"hasDropdown" in link && link.hasDropdown && (
+                  <ChevronDown size={16} className="text-text-secondary/50" />
+                )}
+              </Link>
+            ))}
+          </nav>
+        </div>
+      )}
     </AppBar>
   );
 }

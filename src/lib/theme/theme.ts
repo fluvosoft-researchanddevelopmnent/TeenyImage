@@ -9,18 +9,20 @@ export const theme = createTheme({
     primary: {
       main: "#e5322d",
       dark: "#d42b26",
+      contrastText: "#ffffff",
     },
     secondary: {
-      main: "#9c27b0",
+      main: "#e5322d",
     },
     background: {
-      default: "#f5f5fa",
+      default: "#faf9f7",
       paper: "#ffffff",
     },
     text: {
-      primary: "#333333",
-      secondary: "#666666",
+      primary: "#000000",
+      secondary: "#333333",
     },
+    divider: "#e8e6e3",
   },
   typography: {
     fontFamily: "var(--font-poppins), ui-sans-serif, system-ui, sans-serif",
@@ -47,8 +49,8 @@ export const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: "#ffffff",
-          color: "#333333",
+          backgroundColor: "#faf9f7",
+          color: "#000000",
         },
       },
     },
