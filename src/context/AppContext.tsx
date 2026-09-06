@@ -20,9 +20,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   useEffect(() => {
     try {
       document.documentElement.classList.remove("dark");
-      localStorage.removeItem("teenypdf_theme");
+      localStorage.removeItem("teenyimage_theme");
 
-      const savedRecent = localStorage.getItem("teenypdf_recent_files");
+      const savedRecent = localStorage.getItem("teenyimage_recent_files");
       if (savedRecent) {
         setRecentFiles(JSON.parse(savedRecent));
       }
@@ -41,7 +41,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setRecentFiles((prev) => {
       const updated = [newRecord, ...prev.filter((f) => f.name !== file.name)].slice(0, 10);
       try {
-        localStorage.setItem("teenypdf_recent_files", JSON.stringify(updated));
+        localStorage.setItem("teenyimage_recent_files", JSON.stringify(updated));
       } catch {
         // storage overflow fallback
       }
@@ -51,7 +51,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const clearRecentFiles = () => {
     setRecentFiles([]);
-    localStorage.removeItem("teenypdf_recent_files");
+    localStorage.removeItem("teenyimage_recent_files");
   };
 
   return (

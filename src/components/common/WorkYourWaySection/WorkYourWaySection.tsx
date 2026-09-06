@@ -8,26 +8,26 @@ const CARDS = [
   {
     title: "Work offline with Desktop",
     description:
-      "Batch convert and manage documents in your browser — private, local, and with no upload limits.",
+      "Batch process and convert images in your browser — private, local, and with no upload limits.",
     href: "/",
     image: "/images/work-your-way/desktop.png",
-    imageAlt: "TeenyPDF desktop converter preview",
+    imageAlt: "TeenyImage desktop converter preview",
   },
   {
     title: "On-the-go with Mobile",
     description:
-      "Your favorite PDF tools, right in your pocket. Keep working on your projects anytime, anywhere.",
+      "Your favorite image tools, right in your pocket. Keep working on your projects anytime, anywhere.",
     href: "/",
     image: "/images/work-your-way/mobile.png",
-    imageAlt: "TeenyPDF mobile editing preview",
+    imageAlt: "TeenyImage mobile editing preview",
   },
   {
     title: "Built for business",
     description:
-      "Automate document workflows, onboard teams easily, and scale conversions with flexible plans.",
+      "Automate image workflows, onboard teams easily, and scale conversions with flexible plans.",
     href: "/",
     image: "/images/work-your-way/business.png",
-    imageAlt: "TeenyPDF business tools preview",
+    imageAlt: "TeenyImage business tools preview",
   },
 ] as const;
 

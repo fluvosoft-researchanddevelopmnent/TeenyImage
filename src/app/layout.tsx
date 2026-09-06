@@ -16,8 +16,9 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "TeenyPDF — Free PDF Converter Tools",
-  description: "Free, browser-based PDF conversion tools. Convert PDF to Word, Excel, PowerPoint, JPG, Markdown and more — or convert Word, Excel, images into PDF. 100% client-side, private, and unlimited.",
+  title: "TeenyImage — Free Online Image Tools",
+  description:
+    "Free, browser-based image tools. Compress, resize, crop, rotate, convert, remove background and more — 100% client-side, private, and unlimited.",
   icons: {
     icon: "/favicon.svg",
   },

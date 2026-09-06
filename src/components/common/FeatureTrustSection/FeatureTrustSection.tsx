@@ -15,7 +15,7 @@ export function FeatureTrustSection() {
               <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-background">
                 <Image
                   src="/images/feature/privacy-promo.png"
-                  alt="TeenyPDF document and image tools preview"
+                  alt="TeenyImage document and image tools preview"
                   fill
                   sizes="(max-width: 768px) 100vw, 45vw"
                   className="object-contain object-center"
@@ -26,11 +26,11 @@ export function FeatureTrustSection() {
 
             <div className="text-center md:max-w-xl md:text-left md:justify-self-start">
               <h2 className="text-2xl font-extrabold leading-tight tracking-tight text-text-primary sm:text-3xl md:text-4xl">
-                PDF conversion made simple with TeenyPDF
+                Image editing made simple with TeenyImage
               </h2>
               <p className="mt-4 text-base leading-relaxed text-text-secondary md:text-[17px]">
                 Experience the speed, simplicity, and security of tools that run in your browser.
-                Convert, organize, and transform documents without uploading files to a server.
+                Compress, crop, convert, and transform images without uploading files to a server.
               </p>
               <Link
                 href="/"
@@ -48,10 +48,10 @@ export function FeatureTrustSection() {
         <Container>
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-2xl font-extrabold tracking-tight text-text-primary sm:text-3xl md:text-4xl">
-              The PDF software built for private, everyday work
+              The image tool built for private, everyday work
             </h2>
             <p className="mt-4 text-base leading-relaxed text-text-secondary md:text-[17px]">
-              TeenyPDF is your browser-based toolkit for converting PDFs with ease. Get the tools you
+              TeenyImage is your browser-based toolkit for editing and converting images with ease. Get the tools you
               need to work efficiently with digital documents while keeping your files on your device.
             </p>
 

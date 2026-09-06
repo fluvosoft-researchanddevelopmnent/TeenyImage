@@ -1,20 +1,21 @@
 import type { LucideIcon } from "lucide-react";
 import {
-  FileCode,
+  Minimize2,
+  Maximize2,
+  Crop,
+  RotateCw,
+  FlipHorizontal2,
+  FileImage,
   FileOutput,
-  FileText,
-  Globe,
-  Hash,
   Image,
   ImagePlus,
-  LayoutGrid,
-  Minimize2,
+  Globe,
   Pencil,
-  Presentation,
-  Sheet,
-  Shield,
-  Unlock,
-  Wrench,
+  Laugh,
+  Sparkles,
+  Eraser,
+  Stamp,
+  ScanFace,
 } from "lucide-react";
 
 import type { ToolFilterCategory } from "@/types";
@@ -29,165 +30,156 @@ export type Tool = {
   isNew?: boolean;
 };
 
-export const PDF_TOOLS: Tool[] = [
-  // ── Edit PDF ─────────────────────────────────────────────────────────────
+export const IMAGE_TOOLS: Tool[] = [
+  // ── Optimize ─────────────────────────────────────────────────────────────
   {
-    title: "Edit PDF",
-    description:
-      "Add text, images, shapes or freehand annotations to a PDF document. Edit the size, font, and color of the added content.",
-    href: "/edit-pdf",
-    categories: ["Edit PDF"],
-    icon: Pencil,
-    iconClassName: "bg-[#f3e8ff] text-[#7c3aed]",
-    isNew: true,
-  },
-  {
-    title: "Compress PDF",
-    description: "Reduce file size while optimizing for maximal PDF quality.",
-    href: "/compress-pdf",
-    categories: ["Edit PDF"],
+    title: "Compress Image",
+    description: "Compress JPG, PNG, SVG, GIF and WEBP files while saving space and maintaining quality.",
+    href: "/compress-image",
+    categories: ["Optimize"],
     icon: Minimize2,
     iconClassName: "bg-[#e8f7ef] text-[#16a34a]",
     isNew: true,
   },
   {
-    title: "Unlock PDF",
-    description:
-      "Remove PDF password security, giving you the freedom to use your PDFs as you want.",
-    href: "/unlock-pdf",
-    categories: ["Edit PDF"],
-    icon: Unlock,
-    iconClassName: "bg-[#e8f0fe] text-[#2563eb]",
-    isNew: true,
-  },
-  {
-    title: "Protect PDF",
-    description:
-      "Protect PDF files with a password. Encrypt PDF documents to prevent unauthorized access.",
-    href: "/protect-pdf",
-    categories: ["Edit PDF"],
-    icon: Shield,
-    iconClassName: "bg-[#e8f0fe] text-[#2563eb]",
-    isNew: true,
-  },
-  {
-    title: "Organize PDF",
-    description:
-      "Sort pages of your PDF file however you like. Delete PDF pages or add PDF pages to your document at your convenience.",
-    href: "/organize-pdf",
-    categories: ["Edit PDF"],
-    icon: LayoutGrid,
-    iconClassName: "bg-[#fff0e6] text-[#ea580c]",
-    isNew: true,
-  },
-  {
-    title: "PDF to PDF/A",
-    description:
-      "Transform your PDF to PDF/A, the ISO-standardized version of PDF for long-term archiving. Your PDF will preserve formatting when accessed in the future.",
-    href: "/pdf-to-pdfa",
-    categories: ["Edit PDF"],
-    icon: FileOutput,
-    iconClassName: "bg-[#e8f0fe] text-[#2563eb]",
-    isNew: true,
-  },
-  {
-    title: "Repair PDF",
-    description:
-      "Repair a damaged PDF and recover data from corrupt PDF. Fix PDF files with our Repair tool.",
-    href: "/repair-pdf",
-    categories: ["Edit PDF"],
-    icon: Wrench,
+    title: "Upscale Image",
+    description: "Enlarge your image to a higher resolution without losing quality.",
+    href: "/upscale-image",
+    categories: ["Optimize"],
+    icon: Maximize2,
     iconClassName: "bg-[#e8f7ef] text-[#16a34a]",
     isNew: true,
   },
   {
-    title: "Page numbers",
-    description:
-      "Add page numbers into PDFs with ease. Choose your positions, dimensions, typography.",
-    href: "/page-numbers",
-    categories: ["Edit PDF"],
-    icon: Hash,
+    title: "Remove Background",
+    description: "Remove the background from your image automatically. 100% in your browser.",
+    href: "/remove-background",
+    categories: ["Optimize"],
+    icon: Eraser,
+    iconClassName: "bg-[#e5f5d2] text-[#5f8c30]",
+    isNew: true,
+  },
+  // ── Edit ─────────────────────────────────────────────────────────────────
+  {
+    title: "Resize Image",
+    description: "Resize JPG, PNG, SVG or GIF by defining new width and height pixels.",
+    href: "/resize-image",
+    categories: ["Edit"],
+    icon: Image,
+    iconClassName: "bg-[#e8f0fe] text-[#2563eb]",
+    isNew: true,
+  },
+  {
+    title: "Crop Image",
+    description: "Crop JPG, PNG or GIF by defining a rectangle in pixels. Cut your image online.",
+    href: "/crop-image",
+    categories: ["Edit"],
+    icon: Crop,
+    iconClassName: "bg-[#e0f7fa] text-[#0891b2]",
+    isNew: true,
+  },
+  {
+    title: "Rotate Image",
+    description: "Rotate JPG, PNG or GIF online. Rotate image left 90°, 180°, 270° or any angle.",
+    href: "/rotate-image",
+    categories: ["Edit"],
+    icon: RotateCw,
+    iconClassName: "bg-[#fff0e6] text-[#ea580c]",
+    isNew: true,
+  },
+  {
+    title: "Flip Image",
+    description: "Flip JPG, PNG or GIF images horizontally or vertically in your browser.",
+    href: "/flip-image",
+    categories: ["Edit"],
+    icon: FlipHorizontal2,
     iconClassName: "bg-[#f3e8ff] text-[#7c3aed]",
     isNew: true,
   },
-
-  // ── PDF → Other ──────────────────────────────────────────────────────────
+  // ── Convert ───────────────────────────────────────────────────────────────
   {
-    title: "PDF to Word",
-    description:
-      "Easily convert your PDF files into easy-to-edit DOC and DOCX documents. The converted Word document is almost 100% accurate.",
-    href: "/pdf-to-word",
-    categories: ["PDF to Other"],
-    icon: FileText,
-    iconClassName: "bg-[#e8f0fe] text-[#2b579a]",
+    title: "Convert to JPG",
+    description: "Convert PNG, GIF, TIF, PSD, SVG, WEBP or RAW format images to JPG.",
+    href: "/convert-to-jpg",
+    categories: ["Convert"],
+    icon: FileOutput,
+    iconClassName: "bg-[#fef9c3] text-[#ca8a04]",
   },
   {
-    title: "PDF to PowerPoint",
-    description: "Turn your PDF files into easy-to-edit PPT and PPTX slideshows.",
-    href: "/pdf-to-powerpoint",
-    categories: ["PDF to Other"],
-    icon: Presentation,
-    iconClassName: "bg-[#fff0e6] text-[#d24726]",
+    title: "Convert from JPG",
+    description: "Convert JPG images to PNG, GIF, WEBP, or animated GIF format.",
+    href: "/jpg-to-image",
+    categories: ["Convert"],
+    icon: FileImage,
+    iconClassName: "bg-[#fef9c3] text-[#ca8a04]",
   },
   {
-    title: "PDF to JPG",
-    description: "Convert each PDF page into a high-resolution JPG image or extract all images.",
-    href: "/pdf-to-jpg",
-    categories: ["PDF to Other"],
-    icon: Image,
-    iconClassName: "bg-[#fff8e6] text-[#f39c12]",
-  },
-  {
-    title: "PDF to Markdown",
-    description:
-      "Easily turn PDFs into Markdown files. Perfect for notes, docs, and LLMs. Headings, tables, lists, and links preserved automatically.",
-    href: "/pdf-to-markdown",
-    categories: ["PDF to Other"],
-    icon: FileCode,
+    title: "Convert to PNG",
+    description: "Convert JPG, WEBP, GIF, BMP, or SVG images to high-quality PNG format.",
+    href: "/convert-to-png",
+    categories: ["Convert"],
+    icon: FileImage,
     iconClassName: "bg-[#eef2ff] text-[#6366f1]",
     isNew: true,
   },
-
-  // ── Other → PDF ──────────────────────────────────────────────────────────
   {
-    title: "Word to PDF",
-    description: "Make DOC and DOCX files easy to read by converting them to PDF.",
-    href: "/word-to-pdf",
-    categories: ["Other to PDF"],
-    icon: FileText,
-    iconClassName: "bg-[#e8f0fe] text-[#2b579a]",
-  },
-  {
-    title: "Excel to PDF",
-    description: "Make Excel spreadsheets easy to read by converting them to PDF.",
-    href: "/excel-to-pdf",
-    categories: ["Other to PDF"],
-    icon: Sheet,
-    iconClassName: "bg-[#e8f7ef] text-[#217346]",
-  },
-  {
-    title: "JPG to PDF",
-    description: "Convert JPG images to PDF in seconds. Easily adjust orientation and margins.",
-    href: "/jpg-to-pdf",
-    categories: ["Other to PDF"],
+    title: "Image to PDF",
+    description: "Combine one or more images into a single PDF document. Drag to reorder pages.",
+    href: "/image-to-pdf",
+    categories: ["Convert"],
     icon: ImagePlus,
-    iconClassName: "bg-[#fff8e6] text-[#f39c12]",
+    iconClassName: "bg-[#fef2f2] text-[#dc2626]",
   },
   {
-    title: "HTML to PDF",
-    description:
-      "Convert webpages in HTML to PDF. Paste HTML or upload an .html file and convert to PDF with a click.",
-    href: "/html-to-pdf",
-    categories: ["Other to PDF"],
+    title: "HTML to Image",
+    description: "Convert HTML code or a webpage URL into a JPG or PNG image.",
+    href: "/html-to-image",
+    categories: ["Convert"],
     icon: Globe,
     iconClassName: "bg-[#e8f0fe] text-[#3498db]",
+  },
+  // ── Create ────────────────────────────────────────────────────────────────
+  {
+    title: "Photo Editor",
+    description: "Add text, shapes, stickers and effects to your photos with our free editor.",
+    href: "/photo-editor",
+    categories: ["Create"],
+    icon: Pencil,
+    iconClassName: "bg-[#f3e8ff] text-[#7c3aed]",
+    isNew: true,
+  },
+  {
+    title: "Meme Generator",
+    description: "Create funny memes online. Add captions to any image with our meme maker.",
+    href: "/meme-generator",
+    categories: ["Create"],
+    icon: Laugh,
+    iconClassName: "bg-[#fdf2f8] text-[#db2777]",
+    isNew: true,
+  },
+  // ── Security ──────────────────────────────────────────────────────────────
+  {
+    title: "Watermark Image",
+    description: "Stamp an image or text over your image. Select the typography, transparency and position.",
+    href: "/watermark-image",
+    categories: ["Security"],
+    icon: Stamp,
+    iconClassName: "bg-[#e8f0fe] text-[#4a7aab]",
+  },
+  {
+    title: "Blur Face",
+    description: "Blur faces and sensitive information in photos automatically or manually.",
+    href: "/blur-face",
+    categories: ["Security"],
+    icon: ScanFace,
+    iconClassName: "bg-[#f1f5f9] text-[#64748b]",
+    isNew: true,
   },
 ];
 
 export function getToolsByFilter(filter: string): Tool[] {
   if (filter === "All") {
-    return PDF_TOOLS;
+    return IMAGE_TOOLS;
   }
-
-  return PDF_TOOLS.filter((tool) => tool.categories.includes(filter as ToolFilterCategory));
+  return IMAGE_TOOLS.filter((tool) => tool.categories.includes(filter as ToolFilterCategory));
 }

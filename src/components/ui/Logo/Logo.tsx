@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import { APP_NAME } from "@/constants";
 import { cn } from "@/lib/utils/cn";
 
 export type LogoProps = {
@@ -16,7 +15,7 @@ export function Logo({ className }: LogoProps) {
         className,
       )}
     >
-      <span className="text-[22px] font-bold leading-none tracking-tight sm:text-[26px]">{APP_NAME}</span>
+      <span className="text-[22px] font-bold leading-none tracking-tight sm:text-[26px]">TeenyImage</span>
     </Link>
   );
 }

@@ -7,7 +7,7 @@ export function Footer() {
     <footer className="border-t border-border bg-surface py-8">
       <Container className="text-center">
         <Typography variant="body2" className="text-text-secondary">
-          &copy; {new Date().getFullYear()} TeenyPDF. Built with FluvoSoft.
+          &copy; {new Date().getFullYear()} TeenyImage. Built with FluvoSoft.
         </Typography>
       </Container>
     </footer>

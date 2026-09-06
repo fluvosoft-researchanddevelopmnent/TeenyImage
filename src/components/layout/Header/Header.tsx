@@ -8,7 +8,7 @@ import Toolbar from "@mui/material/Toolbar";
 
 import { Logo } from "@/components/ui/Logo";
 import { Container } from "@/components/layout/Container";
-import { NAV_LINKS, PDF_TOOLS } from "@/constants";
+import { NAV_LINKS, IMAGE_TOOLS } from "@/constants";
 import { useApp } from "@/context/AppContext";
 
 export function Header() {
@@ -17,7 +17,7 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const searchResults = searchQuery.trim()
-    ? PDF_TOOLS.filter(
+    ? IMAGE_TOOLS.filter(
         (t) =>
           t.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
           t.description.toLowerCase().includes(searchQuery.toLowerCase())
