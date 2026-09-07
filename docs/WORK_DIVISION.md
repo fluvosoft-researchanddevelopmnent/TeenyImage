@@ -68,19 +68,16 @@ Building a world-class application requires far more than just individual featur
 - [x] Documentation & Guides: `PRD.md`, `WORK_DIVISION.md`, `CONTRIBUTING.md`, `AGENTS.md`
 
 #### Pillar 3: Visual Identity & Brand Assets
-- [ ] Design and produce high-resolution `/favicon.svg` and multi-size `/favicon.ico`
-- [ ] Create `/images/og-image.png` (1200x630) for OpenGraph and Twitter social sharing
-- [ ] Create promo card illustrations in `public/images/work-your-way/`:
-  - `desktop.png` (Desktop batch processing promo)
-  - `mobile.png` (Mobile responsive tools promo)
-  - `business.png` (Business & professional privacy promo)
-- [ ] Create `public/images/feature/privacy-promo.png` (Security & privacy highlight)
+- [x] Design and produce high-resolution `/favicon.svg`
+- [x] Create dynamic OpenGraph card (`src/app/opengraph-image.tsx`) for social sharing
+- [x] Promo card illustrations in `public/images/work-your-way/` (desktop, mobile, business)
+- [x] Security & privacy illustration in `public/images/feature/privacy-promo.png`
 
 #### Pillar 4: SEO, Metadata, Sitemap & Robots
 - [x] Implement dynamic or comprehensive per-route `metadata` for all 20 pages
 - [x] Generate dynamic `src/app/sitemap.ts` (lists all 16 tools, home, blog)
 - [x] Create `src/app/robots.ts` with proper indexing instructions
-- [ ] Add JSON-LD Structured Data (`WebSite`, `SoftwareApplication`) for high Google CTR
+- [x] Add JSON-LD Structured Data (`WebSite`, `SoftwareApplication`) for high Google CTR
 
 #### Pillar 5: Blog & Editorial Engine
 - [x] Build functional blog index in `src/app/blog/page.tsx` with category filters and article cards
@@ -97,7 +94,7 @@ Building a world-class application requires far more than just individual featur
 
 #### Pillar 8: CI/CD & Release Management
 - [ ] Review and merge PRs from `@ratulanik` and `@shafinSI` into `development`
-- [ ] Configure GitHub Actions workflow for automated type-check and linting on PR
+- [ ] Configure GitHub Actions workflow for automated type-check and linting on PR (requires PAT workflow scope)
 - [ ] Final integration QA on `development`
 - [ ] Release PR: `development` ➔ `main`
 
