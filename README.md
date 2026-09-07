@@ -1,62 +1,37 @@
 ﻿# TeenyImage
 
-> Free, browser-based image tools. Your files never leave your device.
+> Free, 100% client-side browser image toolkit. Your files never leave your device.
 
-[![Live](https://img.shields.io/badge/status-in%20development-yellow)](https://github.com/fluvosoft-researchanddevelopmnent/TeenyImage)
+[![Status](https://img.shields.io/badge/status-in%20development-yellow)](https://github.com/fluvosoft-researchanddevelopmnent/TeenyImage)
 [![Organization](https://img.shields.io/badge/org-FluvoSoft-red)](https://github.com/fluvosoft-researchanddevelopmnent)
 
-**TeenyImage** is the image-focused sibling of [TeenyPDF](https://www.teenypdf.com). Inspired by iLoveIMG, it offers 16 browser-based image tools with complete privacy — **no uploads, no tracking, no login**.
-
----
-
-## 👥 Engineering Team
-
-- **`@obsessus`** — Team Lead & Systems Architect (Core Foundation, Layout, SEO, Blog, Brand Assets, Performance, CI/CD)
-- **`@ratulanik`** — Conversion & Optimization Engineer (8 Tools: Compress, Resize, Upscale, JPG/PNG Converters, Image to PDF, HTML to Image)
-- **`@shafinSI`** — Creative, Security & Editing Engineer (8 Tools: Crop, Rotate, Flip, Photo Editor, Meme Generator, Background Remover, Watermark, Blur Face)
-
----
-
-## 🤖 AI Coding Agents & Contributors
-
-If you or your team use an AI coding assistant (Cursor, Claude Code, GitHub Copilot, Antigravity, Windsurf):
-👉 **Read [AGENTS.md](./AGENTS.md) first** for full context, boundary rules, and self-assessment criteria.
+**TeenyImage** is a privacy-first web image suite inspired by iLoveIMG and directly siblinged with [TeenyPDF](https://www.teenypdf.com). All processing executes strictly inside the user''s browser using the HTML5 Canvas API, WebAssembly, and client-side libraries. No file uploads to servers, no content tracking, and no login required.
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | Next.js 16 (App Router) |
-| UI Library | React 19 |
-| Language | TypeScript 6 |
-| Styling | Tailwind CSS v4 |
-| Components | Material UI v9 |
-| Icons | Lucide React |
-| Font | Poppins |
+- **Framework:** Next.js 16 (App Router) + React 19 + TypeScript
+- **Styling:** Tailwind CSS v4 + Material UI (MUI v9)
+- **Icons & Typography:** Lucide React + Poppins (Google Fonts)
+- **Client Processing:** HTML5 Canvas, `browser-image-compression`, `jsPDF`, `jszip`, `@imgly/background-removal`
 
 ---
 
 ## 🚀 Getting Started
 
 ```bash
-# Install dependencies
+# 1. Install dependencies
 npm install
 
-# Start development server
+# 2. Run local development server
 npm run dev
 
-# Open http://localhost:3000
+# 3. Production build check
+npm run build
 ```
 
-## 📜 Available Scripts
-
-| Command | Description |
-|---|---|
-| `npm run dev` | Start development server |
-| `npm run build` | Production build verification |
-| `npm run lint` | Run ESLint check |
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
 ---
 
@@ -64,43 +39,35 @@ npm run dev
 
 ```
 src/
-├── app/           # Next.js App Router pages (20 routes)
-│   ├── blog/      # Blog listing and dynamic article pages
-│   ├── ...        # 16 individual tool route pages
-├── components/    # Reusable UI, layout, and section components  
-├── constants/     # Tool definitions, nav links, and filter configs
-├── context/       # Global session state (AppContext)
-├── lib/image/     # Core image processing logic (16 tools)
-├── lib/theme/     # Material UI theme registry & configuration
-└── types/         # Shared TypeScript interfaces and types
+├── app/           # App Router pages (Home + 16 Tools + Blog + 404)
+├── components/    # Reusable UI primitives, layouts, and page sections
+├── constants/     # Centralized tool registry (IMAGE_TOOLS) & navigation
+├── context/       # Session-only global state (AppContext)
+├── lib/image/     # 16 client-side image processing modules
+├── lib/theme/     # Material UI theme registry & styling tokens
+└── types/         # Shared TypeScript interfaces & types
 ```
+
+---
+
+## 🧰 Supported Tools (16)
+
+| Category | Available Tools |
+|---|---|
+| **Optimize** | Compress Image, Upscale Image, Remove Background |
+| **Edit** | Resize Image, Crop Image, Rotate Image, Flip Image |
+| **Convert** | Convert to JPG, Convert from JPG, Convert to PNG, Image to PDF, HTML to Image |
+| **Create** | Photo Editor, Meme Generator |
+| **Security** | Watermark Image, Blur Face |
 
 ---
 
 ## 📖 Key Documentation
 
-- [AI Agent Guide (`AGENTS.md`)](./AGENTS.md)
-- [Product Requirements Document (`docs/PRD.md`)](./docs/PRD.md)
-- [Work Division & Task Assignments (`docs/WORK_DIVISION.md`)](./docs/WORK_DIVISION.md)
-- [Contributing & Git Guidelines (`CONTRIBUTING.md`)](./CONTRIBUTING.md)
-
----
-
-## 🧰 Tools (16)
-
-| Category | Tools | Route |
-|---|---|---|
-| **Optimize** | Compress Image, Upscale Image, Remove Background | `/compress-image`, `/upscale-image`, `/remove-background` |
-| **Edit** | Resize Image, Crop Image, Rotate Image, Flip Image | `/resize-image`, `/crop-image`, `/rotate-image`, `/flip-image` |
-| **Convert** | Convert to JPG, Convert from JPG, Convert to PNG, Image to PDF, HTML to Image | `/convert-to-jpg`, `/jpg-to-image`, `/convert-to-png`, `/image-to-pdf`, `/html-to-image` |
-| **Create** | Photo Editor, Meme Generator | `/photo-editor`, `/meme-generator` |
-| **Security** | Watermark Image, Blur Face | `/watermark-image`, `/blur-face` |
-
----
-
-## 🤝 Contributing
-
-Please read [CONTRIBUTING.md](./CONTRIBUTING.md) for branch strategy, commit conventions, and pull request workflows.
+- [AI Agent Guide (`AGENTS.md`)](./AGENTS.md) — Operational instructions, scope boundaries, and self-assessment checks for AI coding agents
+- [Product Requirements (`docs/PRD.md`)](./docs/PRD.md) — Detailed feature specs, UI requirements, and UX expectations
+- [Work Division (`docs/WORK_DIVISION.md`)](./docs/WORK_DIVISION.md) — Architecture pillars and modular task checklists
+- [Contributing Guidelines (`CONTRIBUTING.md`)](./CONTRIBUTING.md) — Git branching model, Conventional Commits, and code standards
 
 ---
 
