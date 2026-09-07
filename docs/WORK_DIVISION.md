@@ -1,232 +1,232 @@
-﻿# 👥 TeenyImage — Work Division & Developer Task Assignments
+﻿# 👥 TeenyImage — Work Division, Architecture Pillars & AI Agent Execution Plan
 
-> **Team size:** 3 developers
-> **Total pages:** 19 (1 home + 16 tools + 2 blog)
-> **Total tools:** 16
-
----
-
-## Branch Overview
-
-```
-main
-  └── development
-        ├── feature/foundation-and-core           ← Dev 1 (Team Lead) — MUST MERGE FIRST
-        ├── feature/optimize-and-convert-tools    ← Dev 2 (ratulanik) — starts after Dev 1 merges
-        └── feature/edit-security-create-tools    ← Dev 3 (shafinSI) — starts after Dev 1 merges
-```
-
-> IMPORTANT: Dev 2 and Dev 3 must wait for Dev 1's branch to merge into development before starting. This ensures shared components, theme, and constants are ready.
+> **Organization:** FluvoSoft Research & Development  
+> **Team Members:** `@obsessus` (Lead Architect), `@ratulanik`, `@shafinSI`  
+> **Total Pages:** 20 (Home + 16 Tool Pages + Blog Index + Dynamic Blog Posts + 404)  
+> **Total Tools:** 16 (100% Client-Side in browser)  
+> **AI Agent Guide:** Refer to [AGENTS.md](../AGENTS.md) for automated execution rules.
 
 ---
 
-## Dev 1 — Team Lead (You)
+## 🏛️ The 8 Pillars of a Complete Production Application
 
-**Branch:** `feature/foundation-and-core`
+Building a world-class application requires far more than just individual feature pages. Work is structured around **8 core pillars** so that when all branches merge, the final software is robust, production-ready, performant, and fully shippable.
 
-This is the most critical branch. It establishes everything that Dev 2 and Dev 3 depend on.
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        THE 8 ARCHITECTURE PILLARS                       │
+├────────────────────────────────┬────────────────────────────────────────┤
+│ 1. Core Foundation & Scaffold  │ 5. Content & Blog Engine               │
+│ 2. Tool Processing Logic & UI  │ 6. Error Handling & 404 Resilience     │
+│ 3. Brand Assets & Visual Media │ 7. Performance & Bundle Optimization   │
+│ 4. Search Engine Optimization  │ 8. CI/CD & Production Deployment       │
+└────────────────────────────────┴────────────────────────────────────────┘
+```
+
+---
+
+## 🌿 Git Synchronization Model
+
+```
+                                      main (Release)
+                                       ▲
+                                       │ (PR upon complete QA)
+                                  development
+                                       ▲
+                 ┌─────────────────────┼─────────────────────┐
+                 │                     │                     │
+          @ratulanik               @shafinSI              @obsessus
+   feature/optimize-and-convert feature/edit-security  feature/seo-assets-infra
+        (Pillars 2, 6)          (Pillars 2, 6)        (Pillars 3, 4, 5, 7, 8)
+```
+
+> **Zero Merge Conflicts Rule:** Each developer operates strictly in dedicated files. Shared components (`ConversionPageLayout`, `Header`, `Footer`, `Theme`) are pre-built in `development` and consumed without cross-branch modification.
+
+---
+
+## 👤 @obsessus — Team Lead & Systems Architect
+
+**Branches:** `feature/foundation-and-core` (COMPLETED ✅) ➔ `feature/seo-assets-infra`  
+**Primary Focus:** Pillars 1, 3, 4, 5, 7, 8 & System Integration
 
 ### Task Checklist
 
-#### Project Setup
-- [ ] Initialize Next.js 16 project with TypeScript and App Router
-- [ ] Configure `package.json` — add all dependencies (MUI, Tailwind, Lucide, etc.)
-- [ ] Configure `tsconfig.json` with path aliases (`@/` → `src/`)
-- [ ] Configure `next.config.ts`
-- [ ] Configure `eslint.config.mjs`
-- [ ] Configure `postcss.config.mjs`
-- [ ] Set up `src/app/globals.css` with Tailwind directives and CSS custom properties
+#### Pillar 1: Core Foundation & Shared Infrastructure (COMPLETED)
+- [x] Next.js 16 (App Router) + React 19 + TypeScript + Tailwind v4 + MUI v9 setup
+- [x] Root layout (`src/app/layout.tsx`) with Poppins font and metadata shells
+- [x] MUI Theme Registry (`src/lib/theme/ThemeRegistry.tsx`) & Emotion cache
+- [x] Global design tokens & styling in `src/app/globals.css`
+- [x] Shared UI primitives (`Button`, `Card`, `Icon`, `Logo`, `FilterChip`, `ToolCard`)
+- [x] Global layout components (`Header` with real-time search, `Footer`, `Container`)
+- [x] Central tool registry in `src/constants/tools.ts` (16 tools, categories, icons, color tokens)
+- [x] Navigation & filter constants in `src/constants/index.ts`
+- [x] Global session state in `src/context/AppContext.tsx` (Search & Recent Files)
+- [x] Shared tool page shell: `src/components/common/ConversionPageLayout.tsx`
+- [x] Alternative workspace layout: `src/components/tools/ToolWorkspaceLayout.tsx`
+- [x] Homepage sections: `HeroSection`, `ToolsSection`, `WorkYourWaySection`, `FeatureTrustSection`, `RecentFilesSection`
+- [x] Scaffold 16 placeholder tool pages with route verification
+- [x] Documentation & Guides: `PRD.md`, `WORK_DIVISION.md`, `CONTRIBUTING.md`, `AGENTS.md`
 
-#### Theme & Foundation
-- [ ] `src/lib/theme/theme.ts` — MUI theme with brand color, typography, border radius
-- [ ] `src/lib/theme/ThemeRegistry.tsx` — MUI emotion cache for Next.js SSR
-- [ ] `src/lib/theme/index.ts` — barrel export
-- [ ] `src/lib/utils/cn.ts` — Tailwind class merging utility
+#### Pillar 3: Visual Identity & Brand Assets
+- [ ] Design and produce high-resolution `/favicon.svg` and multi-size `/favicon.ico`
+- [ ] Create `/images/og-image.png` (1200x630) for OpenGraph and Twitter social sharing
+- [ ] Create promo card illustrations in `public/images/work-your-way/`:
+  - `desktop.png` (Desktop batch processing promo)
+  - `mobile.png` (Mobile responsive tools promo)
+  - `business.png` (Business & professional privacy promo)
+- [ ] Create `public/images/feature/privacy-promo.png` (Security & privacy highlight)
 
-#### Types
-- [ ] `src/types/index.ts` — all shared TypeScript types (ToolFilterCategory, BaseComponentProps, WithIcon, ProcessedFileRecord, Tool re-export)
+#### Pillar 4: SEO, Metadata, Sitemap & Robots
+- [ ] Implement dynamic or comprehensive per-route `metadata` for all 20 pages
+- [ ] Generate dynamic `src/app/sitemap.ts` (lists all 16 tools, home, blog)
+- [ ] Create `src/app/robots.ts` with proper indexing instructions
+- [ ] Add JSON-LD Structured Data (`WebSite`, `SoftwareApplication`) for high Google CTR
 
-#### Constants
-- [ ] `src/constants/tools.ts` — IMAGE_TOOLS array with all 16 tool definitions (title, description, href, categories, icon, iconClassName, isNew)
-- [ ] `src/constants/index.ts` — HERO_CONTENT, NAV_LINKS (with hasDropdown for All Tools), HERO_FILTERS array
+#### Pillar 5: Blog & Editorial Engine
+- [ ] Build functional blog index in `src/app/blog/page.tsx` with category filters and article cards
+- [ ] Implement article template in `src/app/blog/[slug]/page.tsx` with breadcrumbs, author, date, top CTA, related tool links, and bottom CTA
+- [ ] Author 3 starter SEO-targeted articles:
+  1. *How to Compress Images for the Web Without Losing Quality*
+  2. *JPG vs PNG vs WEBP: Which Image Format Should You Use?*
+  3. *Why Client-Side Image Processing Protects Your Sensitive Photos*
 
-#### Context
-- [ ] `src/context/AppContext.tsx` — AppProvider with searchQuery state and recentFiles state
+#### Pillar 6 & 7: Resilience, 404 & Performance Optimization
+- [ ] Build custom branded 404 page in `src/app/not-found.tsx`
+- [ ] Create global error boundary in `src/app/error.tsx`
+- [ ] Optimize bundle: Ensure heavy client-side libraries (WASM, jsPDF) are dynamically loaded (`React.lazy` / dynamic imports) on demand
 
-#### UI Components (src/components/ui/)
-- [ ] `Button/Button.tsx` and `Button/index.ts`
-- [ ] `Card/Card.tsx` and `Card/index.ts`
-- [ ] `Icon/Icon.tsx` and `Icon/index.ts`
-- [ ] `Logo/Logo.tsx` and `Logo/index.ts` — TeenyImage logo with icon
-- [ ] `FilterChip/FilterChip.tsx` and `FilterChip/index.ts`
-- [ ] `ToolCard/ToolCard.tsx` and `ToolCard/index.ts` — colored icon box + New badge + title + description
-- [ ] `components/ui/index.ts` — barrel export for all UI components
-
-#### Layout Components (src/components/layout/)
-- [ ] `Container/Container.tsx` and `Container/index.ts` — max-width wrapper
-- [ ] `Header/Header.tsx` and `Header/index.ts` — sticky, backdrop-blur, logo + nav + search + hamburger
-- [ ] `Footer/Footer.tsx` and `Footer/index.ts` — simple copyright footer
-- [ ] `components/layout/index.ts` — barrel export
-
-#### Common Section Components (src/components/common/)
-- [ ] `HeroSection/HeroSection.tsx` and `HeroSection/index.ts`
-- [ ] `ToolsSection/ToolsSection.tsx` and `ToolsSection/index.ts` — filter chips + tool grid
-- [ ] `RecentFilesSection/RecentFilesSection.tsx` and `RecentFilesSection/index.ts`
-- [ ] `WorkYourWaySection/WorkYourWaySection.tsx` and `WorkYourWaySection/index.ts` — 3 promo cards
-- [ ] `FeatureTrustSection/FeatureTrustSection.tsx` and `FeatureTrustSection/index.ts` — privacy promo + trust badges
-- [ ] `ConversionPageLayout.tsx` — shared tool page shell (dropzone + options slot + action button + success state)
-- [ ] `components/common/index.ts` — barrel export
-
-#### Tool Layout
-- [ ] `src/components/tools/ToolWorkspaceLayout.tsx` — alternative tool page shell
-
-#### App Pages
-- [ ] `src/app/layout.tsx` — root layout wrapping AppProvider + ThemeRegistry + Header + Footer
-- [ ] `src/app/page.tsx` — home page with all 5 sections
-- [ ] `src/app/globals.css` — global styles
-- [ ] `src/app/blog/page.tsx` — blog listing page (static placeholder or basic grid)
-- [ ] `src/app/blog/[slug]/page.tsx` — blog post page (static placeholder or MDX)
-
-#### Documentation
-- [ ] Update `README.md` — full setup guide, tech stack, project structure, scripts
-
-#### Completion Criteria
-- `npm run dev` starts without errors
-- Homepage renders with all 5 sections
-- All 16 tool cards appear in the tools grid
-- Header search works (filters tools)
-- Blog pages render (even as placeholders)
-- `npm run build` succeeds
-- Open PR to `development` — tag Dev 2 and Dev 3 to review and then start their work
+#### Pillar 8: CI/CD & Release Management
+- [ ] Review and merge PRs from `@ratulanik` and `@shafinSI` into `development`
+- [ ] Configure GitHub Actions workflow for automated type-check and linting on PR
+- [ ] Final integration QA on `development`
+- [ ] Release PR: `development` ➔ `main`
 
 ---
 
-## Dev 2 — ratulanik
+## 👤 @ratulanik — Conversion & Optimization Engineer
 
-**Branch:** `feature/optimize-and-convert-tools`
+**Branch:** `feature/optimize-and-convert-tools`  
+**Primary Focus:** Pillar 2 (8 Conversion & Optimization Tools) & Pillar 6 (Tool-level UX Resilience)
 
-> Wait for Dev 1's PR to merge into `development`, then:
-> `git checkout development && git pull && git checkout -b feature/optimize-and-convert-tools`
+### AI Agent / Developer Start Condition
+```bash
+git checkout development
+git pull origin development
+git checkout -b feature/optimize-and-convert-tools
+```
 
 ### Task Checklist — 8 Tools
 
-#### Tool 1 — Compress Image
-- [ ] `src/lib/image/compressImage.ts` — compression logic using browser-image-compression
-- [ ] `src/app/compress-image/page.tsx` — UI with 3 quality level buttons, progress, success with size stats
+#### 1. Compress Image (`/compress-image`)
+- [ ] Logic: `src/lib/image/compressImage.ts` (using `browser-image-compression` or Canvas quality scaling)
+- [ ] UI: `src/app/compress-image/page.tsx` (Quality selector: Strong, Recommended, High Quality)
+- [ ] UX: Displays original file size vs compressed size + reduction % badge
 
-#### Tool 2 — Resize Image
-- [ ] `src/lib/image/resizeImage.ts` — canvas-based resize logic
-- [ ] `src/app/resize-image/page.tsx` — width/height inputs, px/percent toggle, aspect ratio lock
+#### 2. Resize Image (`/resize-image`)
+- [ ] Logic: `src/lib/image/resizeImage.ts` (Canvas-based pixel / percentage resizing)
+- [ ] UI: `src/app/resize-image/page.tsx` (Width/Height inputs, Aspect Ratio lock toggle, % vs px toggle)
 
-#### Tool 3 — Upscale Image
-- [ ] `src/lib/image/upscaleImage.ts` — canvas bicubic upscaling
-- [ ] `src/app/upscale-image/page.tsx` — 2x/4x scale factor buttons
+#### 3. Upscale Image (`/upscale-image`)
+- [ ] Logic: `src/lib/image/upscaleImage.ts` (Canvas 2x / 4x bicubic scaling)
+- [ ] UI: `src/app/upscale-image/page.tsx` (2x and 4x scale buttons, before/after resolution preview)
 
-#### Tool 4 — Convert to JPG
-- [ ] `src/lib/image/convertToJpg.ts` — canvas toDataURL conversion
-- [ ] `src/app/convert-to-jpg/page.tsx` — quality slider, multi-file support, ZIP download
+#### 4. Convert to JPG (`/convert-to-jpg`)
+- [ ] Logic: `src/lib/image/convertToJpg.ts` (Supports PNG, GIF, WEBP, SVG, BMP ➔ JPG)
+- [ ] UI: `src/app/convert-to-jpg/page.tsx` (Quality slider 1–100, batch files upload)
+- [ ] UX: Multi-file batch convert with ZIP download via JSZip
 
-#### Tool 5 — Convert from JPG
-- [ ] `src/lib/image/convertFromJpg.ts` — JPG to PNG/GIF/WEBP/animated GIF
-- [ ] `src/app/jpg-to-image/page.tsx` — output format selector, animated GIF from multiple files
+#### 5. Convert from JPG (`/jpg-to-image`)
+- [ ] Logic: `src/lib/image/convertFromJpg.ts` (JPG ➔ PNG, WEBP, GIF)
+- [ ] UI: `src/app/jpg-to-image/page.tsx` (Target format dropdown, quality controls)
 
-#### Tool 6 — Convert to PNG
-- [ ] `src/lib/image/convertToPng.ts` — lossless conversion to PNG
-- [ ] `src/app/convert-to-png/page.tsx` — simple single-option page
+#### 6. Convert to PNG (`/convert-to-png`)
+- [ ] Logic: `src/lib/image/convertToPng.ts` (Lossless conversion to PNG format)
+- [ ] UI: `src/app/convert-to-png/page.tsx` (Drag-and-drop batch upload, direct lossless convert)
 
-#### Tool 7 — Image to PDF
-- [ ] `src/lib/image/imageToPdf.ts` — multi-image to PDF using jsPDF
-- [ ] `src/app/image-to-pdf/page.tsx` — multi-file upload, drag to reorder, page size/orientation/margin options
+#### 7. Image to PDF (`/image-to-pdf`)
+- [ ] Logic: `src/lib/image/imageToPdf.ts` (Client-side PDF compilation via `jsPDF`)
+- [ ] UI: `src/app/image-to-pdf/page.tsx` (Page size A4/Letter/Original, Orientation portrait/landscape, Margins)
+- [ ] UX: Thumbnail reordering list prior to PDF compilation
 
-#### Tool 8 — HTML to Image
-- [ ] `src/lib/image/htmlToImage.ts` — HTML string to canvas to image
-- [ ] `src/app/html-to-image/page.tsx` — tab switcher (raw HTML textarea or file upload), output format selector
+#### 8. HTML to Image (`/html-to-image`)
+- [ ] Logic: `src/lib/image/htmlToImage.ts` (Render raw HTML / SVG to canvas ➔ JPG/PNG)
+- [ ] UI: `src/app/html-to-image/page.tsx` (Tabs: Raw HTML textarea / File upload, Output format switch)
 
-### Completion Criteria
-- All 8 tool pages render correctly
-- All 8 tools process files and produce correct downloads
-- No TypeScript errors
-- Uses ConversionPageLayout for all pages
-- `npm run lint` and `npm run build` pass
-- Open PR to `development`
+### Stop & Self-Assessment Criteria
+- [ ] All 8 tool pages compile with `npm run build` without TypeScript errors
+- [ ] Corrupt image upload shows a clean, non-crashing error notification
+- [ ] Object URLs are revoked after download to prevent memory leaks
+- [ ] Commit history follows `feat(tool-name): message` format
+- [ ] PR created targeting `development` branch (reviewed by `@obsessus`)
 
 ---
 
-## Dev 3 — shafinSI
+## 👤 @shafinSI — Creative, Security & Editing Engineer
 
-**Branch:** `feature/edit-security-create-tools`
+**Branch:** `feature/edit-security-create-tools`  
+**Primary Focus:** Pillar 2 (8 Editing, Security & Creative Tools) & Pillar 6 (Tool-level UX Resilience)
 
-> Wait for Dev 1's PR to merge into `development`, then:
-> `git checkout development && git pull && git checkout -b feature/edit-security-create-tools`
+### AI Agent / Developer Start Condition
+```bash
+git checkout development
+git pull origin development
+git checkout -b feature/edit-security-create-tools
+```
 
 ### Task Checklist — 8 Tools
 
-#### Tool 1 — Crop Image
-- [ ] `src/lib/image/cropImage.ts` — canvas crop logic
-- [ ] `src/app/crop-image/page.tsx` — visual crop editor with drag handles, X/Y/W/H inputs, aspect ratio presets
+#### 1. Crop Image (`/crop-image`)
+- [ ] Logic: `src/lib/image/cropImage.ts` (Canvas sub-rectangle extraction)
+- [ ] UI: `src/app/crop-image/page.tsx` (Interactive draggable crop box, aspect ratio presets: Free, 1:1, 4:3, 16:9)
 
-#### Tool 2 — Rotate Image
-- [ ] `src/lib/image/rotateImage.ts` — canvas rotate logic
-- [ ] `src/app/rotate-image/page.tsx` — 90 CW, 90 CCW, 180 buttons + custom angle input, multi-file ZIP download
+#### 2. Rotate Image (`/rotate-image`)
+- [ ] Logic: `src/lib/image/rotateImage.ts` (Canvas rotation with canvas bounds re-calculation)
+- [ ] UI: `src/app/rotate-image/page.tsx` (Rotate 90° CW, 90° CCW, 180°, custom angle slider)
+- [ ] UX: Batch rotate with ZIP download
 
-#### Tool 3 — Flip Image
-- [ ] `src/lib/image/flipImage.ts` — canvas horizontal/vertical flip
-- [ ] `src/app/flip-image/page.tsx` — Flip Horizontal and Flip Vertical buttons
+#### 3. Flip Image (`/flip-image`)
+- [ ] Logic: `src/lib/image/flipImage.ts` (Canvas `scale(-1, 1)` and `scale(1, -1)`)
+- [ ] UI: `src/app/flip-image/page.tsx` (Flip Horizontal & Flip Vertical buttons, live preview)
 
-#### Tool 4 — Photo Editor (Fullscreen)
-- [ ] `src/lib/image/photoEditor/types.ts` — canvas element types
-- [ ] `src/lib/image/photoEditor/exportEditedImage.ts` — export canvas to file
-- [ ] `src/app/photo-editor/page.tsx` — fullscreen portal editor with toolbar (Select, Text, Pencil, Shapes, Eraser, Image), color picker, undo/redo, zoom, layer management
+#### 4. Photo Editor (`/photo-editor`)
+- [ ] Logic: `src/lib/image/photoEditor/exportEditedImage.ts` & `types.ts`
+- [ ] UI: `src/app/photo-editor/page.tsx` (Fullscreen portal editor modeled after TeenyPDF Edit PDF)
+- [ ] Features: Select tool, Freehand pencil, Text overlays, Shapes (Rectangle, Circle, Arrow), Color picker, Undo/Redo, Zoom, Layer controls
 
-#### Tool 5 — Meme Generator
-- [ ] `src/app/meme-generator/page.tsx` — canvas-based meme editor, top/bottom text inputs, font controls, live preview, download
+#### 5. Meme Generator (`/meme-generator`)
+- [ ] Logic: Canvas text overlay with black stroke and white fill (Impact font standard)
+- [ ] UI: `src/app/meme-generator/page.tsx` (Top text, Bottom text, Font size, Live canvas preview)
 
-#### Tool 6 — Remove Background
-- [ ] `src/lib/image/removeBackground.ts` — wrapper for @imgly/background-removal (WASM)
-- [ ] `src/app/remove-background/page.tsx` — simple upload and auto-process, progress labels, PNG download
+#### 6. Remove Background (`/remove-background`)
+- [ ] Logic: `src/lib/image/removeBackground.ts` (Client-side `@imgly/background-removal` via WASM)
+- [ ] UI: `src/app/remove-background/page.tsx` (One-click auto removal, transparency checkerboard preview, PNG export)
 
-#### Tool 7 — Watermark Image
-- [ ] `src/lib/image/watermarkImage.ts` — canvas watermark overlay logic (text and image)
-- [ ] `src/app/watermark-image/page.tsx` — text/image type toggle, 9-grid position selector, opacity slider, font size, color picker, multi-file ZIP
+#### 7. Watermark Image (`/watermark-image`)
+- [ ] Logic: `src/lib/image/watermarkImage.ts` (Overlay text or image with alpha opacity)
+- [ ] UI: `src/app/watermark-image/page.tsx` (Text / Image mode, 9-point anchor grid selector, Opacity slider, Font styling)
+- [ ] UX: Apply watermark to batch images with ZIP download
 
-#### Tool 8 — Blur Face
-- [ ] `src/lib/image/blurFace.ts` — canvas blur region logic
-- [ ] `src/app/blur-face/page.tsx` — blur intensity selector, auto/manual mode toggle
+#### 8. Blur Face (`/blur-face`)
+- [ ] Logic: `src/lib/image/blurFace.ts` (Pixelate / Gaussian blur filter over selected canvas coordinates)
+- [ ] UI: `src/app/blur-face/page.tsx` (Manual selection blur box + Blur intensity slider Low/Med/High)
 
-### Completion Criteria
-- All 8 tool pages render correctly
-- All 8 tools process files and produce correct downloads
-- Photo Editor launches as fullscreen portal and exports correctly
-- No TypeScript errors
-- `npm run lint` and `npm run build` pass
-- Open PR to `development`
-
----
-
-## Shared Responsibility
-
-These items are the responsibility of ALL developers:
-
-| Item | Standard |
-|---|---|
-| Commit messages | Follow Conventional Commits (see CONTRIBUTING.md) |
-| PR descriptions | Use the PR template in CONTRIBUTING.md |
-| TypeScript | No `any` types — always explicit |
-| Component imports | Always use path aliases (@/) never relative (../../) |
-| Console logs | Remove all console.log before opening a PR |
-| Accessibility | alt text on images, aria-labels on icon buttons |
-| Privacy label | Every upload area must show the privacy label |
+### Stop & Self-Assessment Criteria
+- [ ] All 8 tool pages compile with `npm run build` without TypeScript errors
+- [ ] Photo Editor launches in full screen and exports clear images
+- [ ] Corrupt file upload handles errors gracefully
+- [ ] Object URLs are revoked after download to prevent memory leaks
+- [ ] Commit history follows `feat(tool-name): message` format
+- [ ] PR created targeting `development` branch (reviewed by `@obsessus`)
 
 ---
 
-## Timeline Suggestion
+## 📅 Milestones & Convergence Schedule
 
-| Phase | Who | Duration |
-|---|---|---|
-| Foundation | Dev 1 | 3-5 days |
-| Parallel tool development | Dev 2 + Dev 3 | 5-7 days |
-| Integration testing | All 3 | 1-2 days |
-| Bug fixes and polish | All 3 | 1-2 days |
-| Release: development → main | Dev 1 | 1 day |
-
-**Estimated total: 10-16 days**
+| Milestone | Deliverables | Responsible | Target |
+|---|---|---|---|
+| **M1: Foundation** | Project scaffold, layout, types, constants, 20 route shells | `@obsessus` | ✅ DONE |
+| **M2: Core Features** | 8 Conversion & Optimization tools | `@ratulanik` | In Progress |
+| **M3: Creative Features**| 8 Editing, Security & Creative tools | `@shafinSI` | In Progress |
+| **M4: Production Polish**| Assets, SEO, Blog, 404, Performance lazy-loading | `@obsessus` | In Progress |
+| **M5: Integration QA** | Complete end-to-end testing on `development` | All three | Milestone 4 + 1 day |
+| **M6: Launch** | PR merge `development` ➔ `main` | `@obsessus` | Launch day |
