@@ -83,9 +83,9 @@ Building a world-class application requires far more than just individual featur
 - [ ] Add JSON-LD Structured Data (`WebSite`, `SoftwareApplication`) for high Google CTR
 
 #### Pillar 5: Blog & Editorial Engine
-- [ ] Build functional blog index in `src/app/blog/page.tsx` with category filters and article cards
-- [ ] Implement article template in `src/app/blog/[slug]/page.tsx` with breadcrumbs, author, date, top CTA, related tool links, and bottom CTA
-- [ ] Author 3 starter SEO-targeted articles:
+- [x] Build functional blog index in `src/app/blog/page.tsx` with category filters and article cards
+- [x] Implement article template in `src/app/blog/[slug]/page.tsx` with breadcrumbs, author, date, top CTA, related tool links, and bottom CTA
+- [x] Author 3 starter SEO-targeted articles:
   1. *How to Compress Images for the Web Without Losing Quality*
   2. *JPG vs PNG vs WEBP: Which Image Format Should You Use?*
   3. *Why Client-Side Image Processing Protects Your Sensitive Photos*
