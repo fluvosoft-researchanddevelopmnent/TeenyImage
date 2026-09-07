@@ -15,10 +15,63 @@ const poppins = Poppins({
   display: "swap",
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://teenyimage.com";
+
 export const metadata: Metadata = {
-  title: "TeenyImage — Free Online Image Tools",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "TeenyImage — Free Online Image Tools",
+    template: "%s | TeenyImage",
+  },
   description:
-    "Free, browser-based image tools. Compress, resize, crop, rotate, convert, remove background and more — 100% client-side, private, and unlimited.",
+    "Free, browser-based image tools. Compress, resize, crop, rotate, convert, remove background, and more — 100% client-side, private, and unlimited.",
+  keywords: [
+    "image tools",
+    "compress image",
+    "resize image",
+    "crop image",
+    "convert jpg",
+    "convert png",
+    "remove background",
+    "watermark image",
+    "blur face",
+    "free online image editor",
+    "privacy image converter",
+  ],
+  authors: [{ name: "FluvoSoft", url: "https://github.com/fluvosoft-researchanddevelopmnent" }],
+  creator: "FluvoSoft",
+  publisher: "FluvoSoft",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteUrl,
+    siteName: "TeenyImage",
+    title: "TeenyImage — Free Online Image Tools",
+    description:
+      "100% client-side, private image tools. Compress, resize, crop, convert, and edit images without uploading files to any server.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TeenyImage — Free Online Image Tools",
+    description:
+      "100% browser-based private image toolkit. Compress, convert, edit, and optimize images with zero cloud uploads.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: "/favicon.svg",
   },
