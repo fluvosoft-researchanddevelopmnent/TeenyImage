@@ -1,63 +1,76 @@
-# TeenyPDF Web
+# TeenyImage
 
-A modular Next.js application for PDF tools, built with Material UI, Tailwind CSS, and Lucide icons.
+> Free, 100% client-side browser image toolkit. Your files never leave your device.
 
-## Tech Stack
+[![Status](https://img.shields.io/badge/status-in%20development-yellow)](https://github.com/fluvosoft-researchanddevelopmnent/TeenyImage)
+[![Organization](https://img.shields.io/badge/org-FluvoSoft-red)](https://github.com/fluvosoft-researchanddevelopmnent)
 
-- **Next.js 16** (App Router)
-- **React 19**
-- **TypeScript**
-- **Tailwind CSS v4**
-- **Material UI v9**
-- **Lucide React** (icons)
+**TeenyImage** is a privacy-first web image suite inspired by iLoveIMG and directly siblinged with [TeenyPDF](https://www.teenypdf.com). All processing executes strictly inside the user's browser using the HTML5 Canvas API, WebAssembly, and client-side libraries. No file uploads to servers, no content tracking, and no login required.
 
-## Getting Started
+---
+
+## 🛠️ Tech Stack
+
+- **Framework:** Next.js 16 (App Router) + React 19 + TypeScript
+- **Styling:** Tailwind CSS v4 + Material UI (MUI v9)
+- **Icons & Typography:** Lucide React + Poppins (Google Fonts)
+- **Client Processing:** HTML5 Canvas, `browser-image-compression`, `jsPDF`, `jszip`, `@imgly/background-removal`
+
+---
+
+## 🚀 Getting Started
 
 ```bash
+# 1. Install dependencies
 npm install
+
+# 2. Run local development server
 npm run dev
+
+# 3. Production build check
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-## Project Structure
+---
+
+## 📁 Project Structure
 
 ```
 src/
-├── app/                  # Next.js App Router pages & layouts
-├── components/
-│   ├── ui/               # Reusable UI primitives (Button, Card, Icon)
-│   └── layout/           # Layout components (Header, Footer, Container)
-├── constants/            # App-wide constants
-├── hooks/                # Custom React hooks
-├── lib/
-│   ├── theme/            # MUI theme & ThemeRegistry
-│   └── utils/            # Utility functions (cn, etc.)
-└── types/                # Shared TypeScript types
+├── app/           # App Router pages (Home + 16 Tools + Blog + 404)
+├── components/    # Reusable UI primitives, layouts, and page sections
+├── constants/     # Centralized tool registry (IMAGE_TOOLS) & navigation
+├── context/       # Session-only global state (AppContext)
+├── lib/image/     # 16 client-side image processing modules
+├── lib/theme/     # Material UI theme registry & styling tokens
+└── types/         # Shared TypeScript interfaces & types
 ```
 
-## Component Conventions
+---
 
-Each component lives in its own folder with a barrel export:
+## 🧰 Supported Tools (16)
 
-```
-components/ui/Button/
-├── Button.tsx
-└── index.ts
-```
+| Category | Available Tools |
+|---|---|
+| **Optimize** | Compress Image, Upscale Image, Remove Background |
+| **Edit** | Resize Image, Crop Image, Rotate Image, Flip Image |
+| **Convert** | Convert to JPG, Convert from JPG, Convert to PNG, Image to PDF, HTML to Image |
+| **Create** | Photo Editor, Meme Generator |
+| **Security** | Watermark Image, Blur Face |
 
-Import via path aliases:
+---
 
-```tsx
-import { Button, Card, Icon } from "@/components/ui";
-import { Header, Container } from "@/components/layout";
-```
+## 📖 Key Documentation
 
-## Scripts
+- [AI Agent Guide (`AGENTS.md`)](./AGENTS.md) — Operational instructions, scope boundaries, and self-assessment checks for AI coding agents
+- [Product Requirements (`docs/PRD.md`)](./docs/PRD.md) — Detailed feature specs, UI requirements, and UX expectations
+- [Work Division (`docs/WORK_DIVISION.md`)](./docs/WORK_DIVISION.md) — Architecture pillars and modular task checklists
+- [Contributing Guidelines (`CONTRIBUTING.md`)](./CONTRIBUTING.md) — Git branching model, Conventional Commits, and code standards
 
-| Command       | Description              |
-|---------------|--------------------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Production build       |
-| `npm run start` | Start production server |
-| `npm run lint`  | Run ESLint             |
+---
+
+## 📄 License
+
+Proprietary — FluvoSoft Research & Development
