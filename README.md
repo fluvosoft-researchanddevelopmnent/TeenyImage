@@ -1,11 +1,11 @@
-﻿# TeenyImage
+# TeenyImage
 
 > Free, 100% client-side browser image toolkit. Your files never leave your device.
 
 [![Status](https://img.shields.io/badge/status-in%20development-yellow)](https://github.com/fluvosoft-researchanddevelopmnent/TeenyImage)
 [![Organization](https://img.shields.io/badge/org-FluvoSoft-red)](https://github.com/fluvosoft-researchanddevelopmnent)
 
-**TeenyImage** is a privacy-first web image suite inspired by iLoveIMG and directly siblinged with [TeenyPDF](https://www.teenypdf.com). All processing executes strictly inside the user''s browser using the HTML5 Canvas API, WebAssembly, and client-side libraries. No file uploads to servers, no content tracking, and no login required.
+**TeenyImage** is a privacy-first web image suite inspired by iLoveIMG and directly siblinged with [TeenyPDF](https://www.teenypdf.com). All processing executes strictly inside the user's browser using the HTML5 Canvas API, WebAssembly, and client-side libraries. No file uploads to servers, no content tracking, and no login required.
 
 ---
 
