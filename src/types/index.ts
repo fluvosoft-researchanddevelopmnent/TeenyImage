@@ -21,3 +21,28 @@ export interface ProcessedFileRecord {
   processedAt: string;
   downloadUrl?: string;
 }
+
+// ── Shared Tool Option Types ────────────────────────────────────────────────
+
+export type ImageQualityLevel = "strong" | "recommended" | "high";
+
+export type ImageFormat = "jpg" | "jpeg" | "png" | "webp" | "gif" | "svg";
+
+export type ResizeUnit = "pixels" | "percentage";
+
+export type CropAspectRatioPreset = "free" | "1:1" | "4:3" | "16:9" | "3:2";
+
+export type WatermarkPosition =
+  | "tl"
+  | "tc"
+  | "tr"
+  | "ml"
+  | "mc"
+  | "mr"
+  | "bl"
+  | "bc"
+  | "br";
+
+export type BlurMode = "auto" | "manual";
+
+export type BlurIntensity = "low" | "medium" | "high";

@@ -24,7 +24,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
       const savedRecent = localStorage.getItem("teenyimage_recent_files");
       if (savedRecent) {
-        setRecentFiles(JSON.parse(savedRecent));
+        const parsed = JSON.parse(savedRecent);
+        queueMicrotask(() => {
+          setRecentFiles(parsed);
+        });
       }
     } catch {
       // Ignore SSR localStorage errors
