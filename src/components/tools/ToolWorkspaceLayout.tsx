@@ -15,9 +15,11 @@ import {
   Trash2,
   Plus,
   Code2,
+  AlertCircle,
 } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import { cn } from "@/lib/utils/cn";
+import { formatFileSize } from "@/lib/utils/image";
 import type { LucideIcon } from "lucide-react";
 
 export interface ToolWorkspaceLayoutProps {
@@ -41,6 +43,8 @@ export interface ToolWorkspaceLayoutProps {
   acceptedFileTypes?: string;
   /** Whether multiple files can be uploaded and reordered */
   allowMultiple?: boolean;
+  /** Optional error message to display */
+  error?: string | null;
   /** Controls rendered in the options section below file list */
   optionsContent?: React.ReactNode;
   /** Optional custom input mode content (e.g. raw HTML textarea for HTML to Image) */
@@ -62,14 +66,20 @@ function ImageItemThumbnail({ file }: { file: File }) {
   const [thumbUrl, setThumbUrl] = useState<string | null>(null);
 
   useEffect(() => {
+    let active = true;
     if (file.type.startsWith("image/") || /\.(jpe?g|png|webp|gif|svg|bmp|ico)$/i.test(file.name)) {
       const url = URL.createObjectURL(file);
-      setThumbUrl(url);
+      queueMicrotask(() => {
+        if (active) setThumbUrl(url);
+      });
       return () => {
+        active = false;
         URL.revokeObjectURL(url);
       };
     }
-    setThumbUrl(null);
+    queueMicrotask(() => {
+      if (active) setThumbUrl(null);
+    });
   }, [file]);
 
   if (thumbUrl) {
@@ -101,6 +111,7 @@ export function ToolWorkspaceLayout({
   successTitle = "Processed Successfully!",
   acceptedFileTypes = ".jpg,.jpeg,.png,.webp",
   allowMultiple = false,
+  error,
   optionsContent,
   customInputContent,
   fileUploadTabLabel = "Upload File",
@@ -115,6 +126,7 @@ export function ToolWorkspaceLayout({
   const [resultFileName, setResultFileName] = useState<string>("");
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [inputMode, setInputMode] = useState<"upload" | "custom">("upload");
+  const [isDraggingDropzone, setIsDraggingDropzone] = useState(false);
 
   const appendFileInputRef = useRef<HTMLInputElement>(null);
 
@@ -136,8 +148,20 @@ export function ToolWorkspaceLayout({
         setDownloadUrl(null);
       }
     }
-    // reset input value so selecting the same file again triggers change
     e.target.value = "";
+  };
+
+  const handleDropzoneDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDraggingDropzone(false);
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      const selected = Array.from(e.dataTransfer.files);
+      setFiles((prev) => (allowMultiple ? [...prev, ...selected] : selected));
+      if (downloadUrl) {
+        URL.revokeObjectURL(downloadUrl);
+        setDownloadUrl(null);
+      }
+    }
   };
 
   const removeFile = (index: number) => {
@@ -183,7 +207,7 @@ export function ToolWorkspaceLayout({
     e.dataTransfer.effectAllowed = "move";
   };
 
-  const handleDragOver = (e: React.DragEvent, index: number) => {
+  const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = "move";
   };
@@ -293,7 +317,20 @@ export function ToolWorkspaceLayout({
 
         {/* Upload Mode: Empty Dropzone */}
         {inputMode === "upload" && files.length === 0 && (
-          <div className="border-2 border-dashed border-border rounded-2xl p-6 sm:p-10 text-center hover:border-brand transition bg-background">
+          <div
+            onDragOver={(e) => {
+              e.preventDefault();
+              setIsDraggingDropzone(true);
+            }}
+            onDragLeave={() => setIsDraggingDropzone(false)}
+            onDrop={handleDropzoneDrop}
+            className={cn(
+              "border-2 border-dashed rounded-2xl p-6 sm:p-10 text-center transition bg-background",
+              isDraggingDropzone
+                ? "border-brand bg-red-50/50 scale-[0.99]"
+                : "border-border hover:border-brand"
+            )}
+          >
             <input
               type="file"
               accept={acceptedFileTypes}
@@ -370,7 +407,7 @@ export function ToolWorkspaceLayout({
                   key={`${file.name}-${idx}-${file.size}`}
                   draggable={allowMultiple}
                   onDragStart={(e) => handleDragStart(e, idx)}
-                  onDragOver={(e) => handleDragOver(e, idx)}
+                  onDragOver={handleDragOver}
                   onDrop={(e) => handleDrop(e, idx)}
                   onDragEnd={handleDragEnd}
                   className={cn(
@@ -392,7 +429,7 @@ export function ToolWorkspaceLayout({
                         {file.name}
                       </p>
                       <p className="text-[10px] text-text-secondary/60 mt-0.5">
-                        {(file.size / 1024 / 1024).toFixed(2)} MB
+                        {formatFileSize(file.size)}
                       </p>
                     </div>
                   </div>
@@ -442,6 +479,14 @@ export function ToolWorkspaceLayout({
         {optionsContent && (
           <div className="p-4 rounded-2xl bg-background border border-border">
             {optionsContent}
+          </div>
+        )}
+
+        {/* Error Alert */}
+        {error && (
+          <div className="flex items-center gap-2.5 p-3.5 rounded-xl bg-red-50 border border-red-200 text-xs font-semibold text-red-700">
+            <AlertCircle size={16} className="shrink-0 text-brand" />
+            <span className="flex-1">{error}</span>
           </div>
         )}
 
