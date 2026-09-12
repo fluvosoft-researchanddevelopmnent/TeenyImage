@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { ToolWorkspaceLayout } from "@/components/tools";
+import { ToolWorkspaceLayout } from "@/components/tools/ToolWorkspaceLayout";
 import { IMAGE_TOOLS } from "@/constants";
 import { cn } from "@/lib/utils/cn";
 import {
