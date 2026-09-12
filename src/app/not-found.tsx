@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import { ArrowLeft, Home, Minimize2, Image as ImageIcon, FileOutput, Eraser } from "lucide-react";
 import { Container } from "@/components/layout/Container";
 
@@ -23,7 +23,7 @@ export default function NotFound() {
           </h1>
 
           <p className="mt-3 text-base leading-relaxed text-text-secondary">
-            Sorry, the page or tool you are looking for doesn''t exist or has been moved.
+            Sorry, the page or tool you are looking for doesn&apos;t exist or has been moved.
             All processing remains 100% private in your browser.
           </p>
 
