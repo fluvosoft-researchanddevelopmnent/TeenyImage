@@ -16,7 +16,7 @@ export interface CompressImageResult {
   reductionPercent: number;
 }
 
-const QUALITY_SETTINGS: Record
+const QUALITY_SETTINGS: Record<
   CompressQuality,
   { maxSizeMB: number; initialQuality: number }
 > = {

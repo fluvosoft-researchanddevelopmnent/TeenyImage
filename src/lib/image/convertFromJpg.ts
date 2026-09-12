@@ -70,7 +70,7 @@ async function buildAnimatedGif(files: File[]): Promise<ConvertFromJpgResult> {
 
   gif.finish();
 
-  const blob = new Blob([gif.bytesView()], { type: "image/gif" });
+  const blob = new Blob([new Uint8Array(gif.bytesView())], { type: "image/gif" });
   return { blob, fileName: `animated_${Date.now()}.gif` };
 }
 
@@ -85,7 +85,7 @@ function staticCanvasToGif(canvas: HTMLCanvasElement): Blob {
   gif.writeFrame(index, width, height, { palette });
   gif.finish();
 
-  return new Blob([gif.bytesView()], { type: "image/gif" });
+  return new Blob([new Uint8Array(gif.bytesView())], { type: "image/gif" });
 }
 
 function normalizeFrameSize(
