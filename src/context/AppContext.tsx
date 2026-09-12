@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from "react";
 import type { ProcessedFileRecord } from "@/types";
 
 interface AppContextType {
@@ -34,7 +34,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   }, []);
 
-  const addRecentFile = (file: Omit<ProcessedFileRecord, "id" | "processedAt">) => {
+  const addRecentFile = useCallback((file: Omit<ProcessedFileRecord, "id" | "processedAt">) => {
     const newRecord: ProcessedFileRecord = {
       ...file,
       id: Math.random().toString(36).substring(2, 9),
@@ -50,23 +50,30 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       }
       return updated;
     });
-  };
+  }, []);
 
-  const clearRecentFiles = () => {
+  const clearRecentFiles = useCallback(() => {
     setRecentFiles([]);
-    localStorage.removeItem("teenyimage_recent_files");
-  };
+    try {
+      localStorage.removeItem("teenyimage_recent_files");
+    } catch {
+      // storage error fallback
+    }
+  }, []);
+
+  const value = useMemo(
+    () => ({
+      searchQuery,
+      setSearchQuery,
+      recentFiles,
+      addRecentFile,
+      clearRecentFiles,
+    }),
+    [searchQuery, recentFiles, addRecentFile, clearRecentFiles]
+  );
 
   return (
-    <AppContext.Provider
-      value={{
-        searchQuery,
-        setSearchQuery,
-        recentFiles,
-        addRecentFile,
-        clearRecentFiles,
-      }}
-    >
+    <AppContext.Provider value={value}>
       {children}
     </AppContext.Provider>
   );
