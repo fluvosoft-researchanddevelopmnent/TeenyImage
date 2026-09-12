@@ -1,10 +1,11 @@
 /**
  * Converts one or more JPG files to PNG, WEBP, GIF, or an Animated GIF.
- * GIF encoding uses gifenc (client-side, zero server calls).
+ * Static/animated GIF encoding delegates to the shared `createAnimatedGif()`
+ * utility (src/lib/utils/gif.ts) — no duplicate gifenc logic here.
  * 100% in-browser — files never leave the device.
  */
 
-import { GIFEncoder, quantize, applyPalette } from "gifenc";
+import { createAnimatedGif } from "@/lib/utils/gif";
 
 export type JpgTargetFormat = "png" | "webp" | "gif" | "animated-gif";
 
@@ -40,7 +41,9 @@ export async function convertFromJpg(
   const canvas = await loadImageToCanvas(file);
 
   if (targetFormat === "gif") {
-    const blob = staticCanvasToGif(canvas);
+    // A "static" GIF is just a 1-frame animated GIF — reuse the same
+    // shared encoder instead of a separate hand-rolled path.
+    const blob = await createAnimatedGif([canvas]);
     return { blob, fileName: replaceExtension(file.name, "gif") };
   }
 
@@ -52,57 +55,11 @@ export async function convertFromJpg(
 async function buildAnimatedGif(files: File[]): Promise<ConvertFromJpgResult> {
   const canvases = await Promise.all(files.map(loadImageToCanvas));
 
-  // Normalize every frame to the first frame's dimensions so the GIF
-  // doesn't warp — resize any mismatched frames to match.
-  const { width, height } = canvases[0];
-  const gif = GIFEncoder();
+  // createAnimatedGif normalizes every frame to the first frame's
+  // dimensions internally — no manual resize step needed here.
+  const blob = await createAnimatedGif(canvases, { delay: FRAME_DELAY_MS });
 
-  for (const canvas of canvases) {
-    const frameCanvas = normalizeFrameSize(canvas, width, height);
-    const ctx = frameCanvas.getContext("2d")!;
-    const { data } = ctx.getImageData(0, 0, width, height);
-
-    const palette = quantize(data, 256);
-    const index = applyPalette(data, palette);
-
-    gif.writeFrame(index, width, height, { palette, delay: FRAME_DELAY_MS });
-  }
-
-  gif.finish();
-
-  const blob = new Blob([new Uint8Array(gif.bytesView())], { type: "image/gif" });
   return { blob, fileName: `animated_${Date.now()}.gif` };
-}
-
-function staticCanvasToGif(canvas: HTMLCanvasElement): Blob {
-  const ctx = canvas.getContext("2d")!;
-  const { data, width, height } = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-  const palette = quantize(data, 256);
-  const index = applyPalette(data, palette);
-
-  const gif = GIFEncoder();
-  gif.writeFrame(index, width, height, { palette });
-  gif.finish();
-
-  return new Blob([new Uint8Array(gif.bytesView())], { type: "image/gif" });
-}
-
-function normalizeFrameSize(
-  canvas: HTMLCanvasElement,
-  width: number,
-  height: number
-): HTMLCanvasElement {
-  if (canvas.width === width && canvas.height === height) {
-    return canvas;
-  }
-
-  const resized = document.createElement("canvas");
-  resized.width = width;
-  resized.height = height;
-  const ctx = resized.getContext("2d")!;
-  ctx.drawImage(canvas, 0, 0, width, height);
-  return resized;
 }
 
 function loadImageToCanvas(file: File): Promise<HTMLCanvasElement> {
