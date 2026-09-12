@@ -67,8 +67,12 @@ export default function UpscaleImagePage() {
         size: result.blob.size,
         downloadUrl: url,
       });
-    } catch {
-      setError("Couldn't upscale this file — please check the format and try again.");
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Couldn't upscale this file — please check the format and try again."
+      );
     } finally {
       setIsProcessing(false);
     }

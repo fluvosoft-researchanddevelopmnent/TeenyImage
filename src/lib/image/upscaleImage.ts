@@ -18,6 +18,8 @@ export interface UpscaleImageResult {
   upscaledHeight: number;
 }
 
+const MAX_OUTPUT_DIMENSION = 8000; // px — safe ceiling most browsers/devices handle fine
+
 export function getImageDimensions(
   file: File
 ): Promise<{ width: number; height: number }> {
@@ -51,6 +53,12 @@ export async function upscaleImage(
     const upscaledWidth = originalWidth * factor;
     const upscaledHeight = originalHeight * factor;
 
+    if (upscaledWidth > MAX_OUTPUT_DIMENSION || upscaledHeight > MAX_OUTPUT_DIMENSION) {
+      throw new Error(
+        `Result would be ${upscaledWidth}×${upscaledHeight}px, which is too large to process safely in the browser. Try a smaller image or a lower scale factor.`
+      );
+    }
+
     const canvas = document.createElement("canvas");
     canvas.width = upscaledWidth;
     canvas.height = upscaledHeight;
@@ -60,8 +68,6 @@ export async function upscaleImage(
       throw new Error("Canvas context could not be initialized");
     }
 
-    // Step up in 2x increments for smoother results than a single huge jump,
-    // and enable the browser's highest-quality resampling.
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = "high";
 
