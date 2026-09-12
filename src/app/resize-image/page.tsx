@@ -9,7 +9,6 @@ import {
   getImageDimensions,
   resizeImage,
 } from "@/lib/image/resizeImage";
-import { useApp } from "@/context/AppContext";
 
 const ACCEPT_TYPES = ".jpg,.jpeg,.png,.svg,.gif";
 
@@ -17,7 +16,6 @@ type Unit = "px" | "percent";
 
 export default function ResizeImagePage() {
   const tool = IMAGE_TOOLS.find((t) => t.href === "/resize-image")!;
-  const { addRecentFile } = useApp();
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [originalDims, setOriginalDims] = useState<{ width: number; height: number } | null>(null);
@@ -134,13 +132,6 @@ export default function ResizeImagePage() {
 
       setDownloadUrl(url);
       setResultName(result.fileName);
-
-      addRecentFile({
-        name: result.fileName,
-        toolUsed: tool.title,
-        size: result.blob.size,
-        downloadUrl: url,
-      });
     } catch {
       setError("Couldn't resize this file — please check the format and try again.");
     } finally {
@@ -176,6 +167,7 @@ export default function ResizeImagePage() {
       downloadUrl={downloadUrl}
       resultName={resultName}
       downloadLabel="Download Resized Image"
+      error={error}
       onFileChange={handleFileChange}
       onConvert={handleConvert}
       onReset={handleReset}
@@ -237,10 +229,6 @@ export default function ResizeImagePage() {
             />
             Maintain aspect ratio
           </label>
-
-          {error && (
-            <p className="text-xs font-semibold text-red-600 text-center">{error}</p>
-          )}
         </div>
       )}
     </ConversionPageLayout>

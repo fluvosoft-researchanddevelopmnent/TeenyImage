@@ -5,13 +5,11 @@ import { useState } from "react";
 import { ConversionPageLayout } from "@/components/common";
 import { IMAGE_TOOLS } from "@/constants";
 import { convertToPng } from "@/lib/image/convertToPng";
-import { useApp } from "@/context/AppContext";
 
 const ACCEPT_TYPES = ".jpg,.jpeg,.webp,.gif,.bmp,.ico,.svg";
 
 export default function ConvertToPngPage() {
   const tool = IMAGE_TOOLS.find((t) => t.href === "/convert-to-png")!;
-  const { addRecentFile } = useApp();
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -36,13 +34,6 @@ export default function ConvertToPngPage() {
 
       setDownloadUrl(url);
       setResultName(fileName);
-
-      addRecentFile({
-        name: fileName,
-        toolUsed: tool.title,
-        size: blob.size,
-        downloadUrl: url,
-      });
     } catch {
       setError("Couldn't convert this file — please check the format and try again.");
     } finally {
@@ -61,31 +52,24 @@ export default function ConvertToPngPage() {
   }
 
   return (
-    <>
-      <ConversionPageLayout
-        title={tool.title}
-        description={tool.description}
-        badge={tool.categories[0]}
-        icon={tool.icon}
-        acceptTypes={ACCEPT_TYPES}
-        inputId="convert-to-png-upload"
-        actionLabel="Convert to PNG"
-        processingLabel="Converting..."
-        selectedFile={selectedFile}
-        isProcessing={isProcessing}
-        downloadUrl={downloadUrl}
-        resultName={resultName}
-        downloadLabel="Download PNG"
-        onFileChange={handleFileChange}
-        onConvert={handleConvert}
-        onReset={handleReset}
-      >
-        {error && (
-          <p className="text-xs font-semibold text-red-600 text-center">
-            {error}
-          </p>
-        )}
-      </ConversionPageLayout>
-    </>
+    <ConversionPageLayout
+      title={tool.title}
+      description={tool.description}
+      badge={tool.categories[0]}
+      icon={tool.icon}
+      acceptTypes={ACCEPT_TYPES}
+      inputId="convert-to-png-upload"
+      actionLabel="Convert to PNG"
+      processingLabel="Converting..."
+      selectedFile={selectedFile}
+      isProcessing={isProcessing}
+      downloadUrl={downloadUrl}
+      resultName={resultName}
+      downloadLabel="Download PNG"
+      error={error}
+      onFileChange={handleFileChange}
+      onConvert={handleConvert}
+      onReset={handleReset}
+    />
   );
 }

@@ -5,14 +5,12 @@ import { useState } from "react";
 import { ConversionPageLayout } from "@/components/common";
 import { IMAGE_TOOLS } from "@/constants";
 import { convertToJpg } from "@/lib/image/convertToJpg";
-import { useApp } from "@/context/AppContext";
 
 const ACCEPT_TYPES = ".png,.gif,.tif,.tiff,.svg,.webp,.heic,.bmp,.ico";
 const DEFAULT_QUALITY = 92;
 
 export default function ConvertToJpgPage() {
   const tool = IMAGE_TOOLS.find((t) => t.href === "/convert-to-jpg")!;
-  const { addRecentFile } = useApp();
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [quality, setQuality] = useState(DEFAULT_QUALITY);
@@ -39,13 +37,6 @@ export default function ConvertToJpgPage() {
 
       setDownloadUrl(url);
       setResultName(result.fileName);
-
-      addRecentFile({
-        name: result.fileName,
-        toolUsed: tool.title,
-        size: result.blob.size,
-        downloadUrl: url,
-      });
     } catch (err) {
       setError(
         err instanceof Error
@@ -82,6 +73,7 @@ export default function ConvertToJpgPage() {
       downloadUrl={downloadUrl}
       resultName={resultName}
       downloadLabel="Download JPG"
+      error={error}
       onFileChange={handleFileChange}
       onConvert={handleConvert}
       onReset={handleReset}
@@ -106,9 +98,6 @@ export default function ConvertToJpgPage() {
             onChange={(e) => setQuality(Number(e.target.value))}
             className="w-full accent-brand"
           />
-          {error && (
-            <p className="text-xs font-semibold text-red-600 text-center pt-1">{error}</p>
-          )}
         </div>
       )}
     </ConversionPageLayout>

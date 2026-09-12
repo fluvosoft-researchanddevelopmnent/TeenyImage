@@ -9,7 +9,6 @@ import {
   compressImage,
   type CompressQuality,
 } from "@/lib/image/compressImage";
-import { useApp } from "@/context/AppContext";
 
 const ACCEPT_TYPES = ".jpg,.jpeg,.png,.svg,.gif,.webp";
 
@@ -21,7 +20,6 @@ const QUALITY_OPTIONS: { value: CompressQuality; label: string; hint: string }[]
 
 export default function CompressImagePage() {
   const tool = IMAGE_TOOLS.find((t) => t.href === "/compress-image")!;
-  const { addRecentFile } = useApp();
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [quality, setQuality] = useState<CompressQuality>("recommended");
@@ -57,13 +55,6 @@ export default function CompressImagePage() {
         compressed: result.compressedSize,
         reduction: result.reductionPercent,
       });
-
-      addRecentFile({
-        name: result.fileName,
-        toolUsed: tool.title,
-        size: result.compressedSize,
-        downloadUrl: url,
-      });
     } catch {
       setError("Couldn't compress this file — please check the format and try again.");
     } finally {
@@ -98,6 +89,7 @@ export default function CompressImagePage() {
         downloadUrl={downloadUrl}
         resultName={resultName}
         downloadLabel="Download Compressed Image"
+        error={error}
         onFileChange={handleFileChange}
         onConvert={handleConvert}
         onReset={handleReset}
@@ -126,11 +118,6 @@ export default function CompressImagePage() {
               </button>
             ))}
           </div>
-          {error && (
-            <p className="text-xs font-semibold text-red-600 text-center">
-              {error}
-            </p>
-          )}
         </div>
       </ConversionPageLayout>
 

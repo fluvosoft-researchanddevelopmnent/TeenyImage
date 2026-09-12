@@ -10,7 +10,6 @@ import {
   upscaleImage,
   type UpscaleFactor,
 } from "@/lib/image/upscaleImage";
-import { useApp } from "@/context/AppContext";
 
 const ACCEPT_TYPES = ".jpg,.jpeg,.png";
 
@@ -18,7 +17,6 @@ const SCALE_OPTIONS: UpscaleFactor[] = [2, 4];
 
 export default function UpscaleImagePage() {
   const tool = IMAGE_TOOLS.find((t) => t.href === "/upscale-image")!;
-  const { addRecentFile } = useApp();
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [originalDims, setOriginalDims] = useState<{ width: number; height: number } | null>(
@@ -60,13 +58,6 @@ export default function UpscaleImagePage() {
       setDownloadUrl(url);
       setResultName(result.fileName);
       setResultDims({ width: result.upscaledWidth, height: result.upscaledHeight });
-
-      addRecentFile({
-        name: result.fileName,
-        toolUsed: tool.title,
-        size: result.blob.size,
-        downloadUrl: url,
-      });
     } catch (err) {
       setError(
         err instanceof Error
@@ -106,6 +97,7 @@ export default function UpscaleImagePage() {
         downloadUrl={downloadUrl}
         resultName={resultName}
         downloadLabel="Download Upscaled Image"
+        error={error}
         onFileChange={handleFileChange}
         onConvert={handleConvert}
         onReset={handleReset}
@@ -140,10 +132,6 @@ export default function UpscaleImagePage() {
                   {originalDims.width * scale} × {originalDims.height * scale}
                 </span>
               </p>
-            )}
-
-            {error && (
-              <p className="text-xs font-semibold text-red-600 text-center">{error}</p>
             )}
           </div>
         )}
