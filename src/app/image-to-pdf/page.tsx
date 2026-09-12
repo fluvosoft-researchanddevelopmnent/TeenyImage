@@ -58,8 +58,12 @@ export default function ImageToPdfPage() {
       category={tool.categories[0]}
       icon={tool.icon}
       actionButtonText="Create PDF"
+      processingText="Creating PDF..."
+      downloadButtonText="Download PDF"
+      successTitle="PDF Created Successfully!"
       acceptedFileTypes={ACCEPT_TYPES}
       allowMultiple
+      error={error}
       onExecute={handleExecute}
       optionsContent={
         <div className="space-y-4">
@@ -133,14 +137,6 @@ export default function ImageToPdfPage() {
               ))}
             </div>
           </div>
-
-          <p className="text-[10px] text-text-secondary/70 text-center">
-            Pages are created in the order files were selected.
-          </p>
-
-          {error && (
-            <p className="text-xs font-semibold text-red-600 text-center">{error}</p>
-          )}
         </div>
       }
     />

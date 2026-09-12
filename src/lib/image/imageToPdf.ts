@@ -4,6 +4,7 @@
  */
 
 import { jsPDF } from "jspdf";
+import { loadImage, createCanvas, canvasToDataUrl, cleanupCanvas } from "@/lib/utils/image";
 
 export type PdfPageSize = "A4" | "Letter" | "Original";
 export type PdfOrientation = "portrait" | "landscape";
@@ -21,8 +22,8 @@ export interface ImageToPdfResult {
 }
 
 const PAGE_SIZES_PX: Record<"A4" | "Letter", { width: number; height: number }> = {
-  A4: { width: 794, height: 1123 }, // 210mm x 297mm @ 96dpi
-  Letter: { width: 816, height: 1056 }, // 8.5in x 11in @ 96dpi
+  A4: { width: 794, height: 1123 },
+  Letter: { width: 816, height: 1056 },
 };
 
 const MARGIN_PX: Record<PdfMargin, number> = {
@@ -43,8 +44,13 @@ export async function convertImagesToPdf(
   const margin = MARGIN_PX[options.margin];
   let doc: jsPDF | null = null;
 
+  // files arrive in the exact order the user arranged them in
+  // ToolWorkspaceLayout (drag-and-drop or up/down arrows).
   for (const file of files) {
-    const { dataUrl, width, height } = await loadImageAsDataUrl(file);
+    const image = await loadImage(file);
+    const width = image.naturalWidth || image.width;
+    const height = image.naturalHeight || image.height;
+
     const { pageWidth, pageHeight, pageOrientation } = computePageDimensions(
       width,
       height,
@@ -59,6 +65,15 @@ export async function convertImagesToPdf(
     const drawHeight = height * scale;
     const x = margin + (availableWidth - drawWidth) / 2;
     const y = margin + (availableHeight - drawHeight) / 2;
+
+    // Flatten onto white — jsPDF embeds this as JPEG, and transparent
+    // PNGs/WEBPs would otherwise render as black.
+    const { canvas, ctx } = createCanvas(width, height);
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(0, 0, width, height);
+    ctx.drawImage(image, 0, 0, width, height);
+    const dataUrl = canvasToDataUrl(canvas, "image/jpeg", 0.92);
+    cleanupCanvas(canvas);
 
     if (!doc) {
       doc = new jsPDF({
@@ -102,45 +117,4 @@ function computePageDimensions(
   const pageHeight = isLandscape ? Math.min(base.width, base.height) : Math.max(base.width, base.height);
 
   return { pageWidth, pageHeight, pageOrientation: isLandscape ? "l" : "p" };
-}
-
-function loadImageAsDataUrl(
-  file: File
-): Promise<{ dataUrl: string; width: number; height: number }> {
-  const objectUrl = URL.createObjectURL(file);
-
-  return new Promise((resolve, reject) => {
-    const img = new window.Image();
-
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
-
-      const ctx = canvas.getContext("2d");
-      if (!ctx) {
-        URL.revokeObjectURL(objectUrl);
-        reject(new Error("Canvas context could not be initialized"));
-        return;
-      }
-
-      // Flatten onto white — we always encode as JPEG for jsPDF
-      // compatibility across all input formats (PNG transparency would
-      // otherwise turn black).
-      ctx.fillStyle = "#FFFFFF";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0);
-
-      const dataUrl = canvas.toDataURL("image/jpeg", 0.92);
-      URL.revokeObjectURL(objectUrl);
-      resolve({ dataUrl, width: img.naturalWidth, height: img.naturalHeight });
-    };
-
-    img.onerror = () => {
-      URL.revokeObjectURL(objectUrl);
-      reject(new Error(`Failed to load "${file.name}" — file may be corrupt or unsupported`));
-    };
-
-    img.src = objectUrl;
-  });
 }
