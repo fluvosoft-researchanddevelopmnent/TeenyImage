@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Upload, RefreshCw, Download, Check, ShieldCheck, FileText, AlertCircle, X } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { formatFileSize } from "@/lib/utils/image";
@@ -83,6 +83,7 @@ export function ConversionPageLayout({
   const { addRecentFile } = useApp();
   const [isDragging, setIsDragging] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const recordedDownloadUrlRef = useRef<string | null>(null);
 
   // Manage image preview with memory cleanup
   useEffect(() => {
@@ -113,13 +114,16 @@ export function ConversionPageLayout({
 
   // Record to recent files when conversion completes
   useEffect(() => {
-    if (downloadUrl && resultName) {
+    if (downloadUrl && resultName && recordedDownloadUrlRef.current !== downloadUrl) {
+      recordedDownloadUrlRef.current = downloadUrl;
       addRecentFile({
         name: resultName,
         toolUsed: title,
         size: selectedFile?.size || 0,
         downloadUrl,
       });
+    } else if (!downloadUrl) {
+      recordedDownloadUrlRef.current = null;
     }
   }, [downloadUrl, resultName, title, selectedFile?.size, addRecentFile]);
 
