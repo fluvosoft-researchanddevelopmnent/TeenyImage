@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "Rotate IMAGE Online",
   description: "Rotate JPG, PNG, or GIF images online. Rotate 90 degrees left, right, 180 degrees, or custom angles.",
   openGraph: {
-    title: "Rotate IMAGE Online | TeenyImage",
+    title: "Rotate IMAGE Online | TeenyIMG",
     description: "Rotate JPG, PNG, or GIF images online. Rotate 90 degrees left, right, 180 degrees, or custom angles.",
   },
 };

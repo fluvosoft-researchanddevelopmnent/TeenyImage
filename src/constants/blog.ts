@@ -31,7 +31,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "Slashing image file sizes by up to 80% without introducing visible blur or artifacts is easier than you think. Here is how modern browser compression works.",
     date: "September 7, 2026",
-    author: "TeenyImage Editorial",
+    author: "TeenyIMG Editorial",
     readTime: "4 min read",
     category: "Optimization",
     primaryCta: {
@@ -77,7 +77,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "4. Zero-upload client-side compression",
         paragraphs: [
-          "Traditional image compression websites upload your sensitive personal files to remote cloud servers. TeenyImage takes a different approach: all compression algorithms execute 100% inside your browser using the HTML5 Canvas API and WebAssembly.",
+          "Traditional image compression websites upload your sensitive personal files to remote cloud servers. TeenyIMG takes a different approach: all compression algorithms execute 100% inside your browser using the HTML5 Canvas API and WebAssembly.",
           "Your photos never leave your device, eliminating security vulnerabilities while delivering lightning-fast results.",
         ],
       },
@@ -89,7 +89,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "A complete guide to choosing the right image format for photos, graphics, transparent icons, and web performance.",
     date: "September 7, 2026",
-    author: "TeenyImage Editorial",
+    author: "TeenyIMG Editorial",
     readTime: "5 min read",
     category: "Formats",
     primaryCta: {
@@ -144,7 +144,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "Cloud-based conversion sites often log, store, and inspect your uploaded files. Here is why browser-based tools are the future of digital privacy.",
     date: "September 7, 2026",
-    author: "TeenyImage Editorial",
+    author: "TeenyIMG Editorial",
     readTime: "4 min read",
     category: "Privacy",
     primaryCta: {
@@ -168,8 +168,8 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "2. How browser-based processing works",
         paragraphs: [
-          "Modern web browsers are capable of running powerful computations locally. With WebAssembly and the HTML5 Canvas API, TeenyImage performs operations like resizing, watermarking, background removal, and compression directly on your computer's CPU and GPU.",
-          "No bytes are sent across the wire. Disconnecting your internet after opening TeenyImage will still allow you to process and export your files.",
+          "Modern web browsers are capable of running powerful computations locally. With WebAssembly and the HTML5 Canvas API, TeenyIMG performs operations like resizing, watermarking, background removal, and compression directly on your computer's CPU and GPU.",
+          "No bytes are sent across the wire. Disconnecting your internet after opening TeenyIMG will still allow you to process and export your files.",
         ],
         calloutLink: {
           text: "Blur faces and confidential details locally",
@@ -179,7 +179,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "3. No accounts, no cookies, no tracking",
         paragraphs: [
-          "TeenyImage requires no registration, login, or personal details. Your work session lives strictly in temporary browser memory and is cleanly disposed of the moment you close the tab.",
+          "TeenyIMG requires no registration, login, or personal details. Your work session lives strictly in temporary browser memory and is cleanly disposed of the moment you close the tab.",
           "We believe essential digital tools should be completely free, unlimited, and genuinely private.",
         ],
       },
@@ -191,7 +191,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "Need to combine receipts, document scans, or photos into a single PDF? Learn how to arrange, resize, and convert multiple images into a professional PDF without uploading files.",
     date: "September 13, 2026",
-    author: "TeenyImage Editorial",
+    author: "TeenyIMG Editorial",
     readTime: "5 min read",
     category: "Formats",
     primaryCta: {
@@ -215,7 +215,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "2. Organizing and reordering pages effortlessly",
         paragraphs: [
-          "When selecting multiple photos, they rarely appear in the exact chronological sequence you need. TeenyImage's Image to PDF tool features interactive drag-and-drop reordering and arrow buttons so you can arrange pages before generating the document.",
+          "When selecting multiple photos, they rarely appear in the exact chronological sequence you need. TeenyIMG's Image to PDF tool features interactive drag-and-drop reordering and arrow buttons so you can arrange pages before generating the document.",
           "Live image thumbnail previews help you verify orientation and layout at a glance.",
         ],
         calloutLink: {
@@ -233,7 +233,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "4. Uncompromising privacy for sensitive records",
         paragraphs: [
-          "Tax receipts, medical scans, government IDs, and signed contracts should never be uploaded to remote file converters. With TeenyImage, jsPDF compiles the PDF directly inside your browser.",
+          "Tax receipts, medical scans, government IDs, and signed contracts should never be uploaded to remote file converters. With TeenyIMG, jsPDF compiles the PDF directly inside your browser.",
           "Your confidential files never leave your device, giving you total peace of mind.",
         ],
       },
@@ -245,7 +245,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "Discover how multi-pass bicubic smoothing and aspect ratio locking allow you to enlarge or downscale photos for web, print, and social media without blur.",
     date: "September 13, 2026",
-    author: "TeenyImage Editorial",
+    author: "TeenyIMG Editorial",
     readTime: "4 min read",
     category: "Optimization",
     primaryCta: {
@@ -273,7 +273,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "2. How multi-pass bicubic smoothing prevents pixelation",
         paragraphs: [
-          "TeenyImage's upscaler employs high-quality bicubic interpolation with multi-pass intermediate stages for 4x scaling. Instead of blowing up pixels abruptly, intermediate passes calculate smooth color gradients across newly synthesized pixels.",
+          "TeenyIMG's upscaler employs high-quality bicubic interpolation with multi-pass intermediate stages for 4x scaling. Instead of blowing up pixels abruptly, intermediate passes calculate smooth color gradients across newly synthesized pixels.",
           "This technique preserves edge sharpness while preventing the blocky artifacts typical of naive nearest-neighbor scaling.",
         ],
       },

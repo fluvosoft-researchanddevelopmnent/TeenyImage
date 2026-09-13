@@ -3,7 +3,7 @@ import { IMAGE_TOOLS } from "@/constants/tools";
 import { BLOG_POSTS } from "@/constants/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://teenyimage.com";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://teenyimg.com";
 
   const toolRoutes: MetadataRoute.Sitemap = IMAGE_TOOLS.map((tool) => ({
     url: `${baseUrl}${tool.href}`,

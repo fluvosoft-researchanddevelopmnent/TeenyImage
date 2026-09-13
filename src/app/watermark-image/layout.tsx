@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "Watermark Image Online",
   description: "Protect your photos by stamping text or logo watermarks. Customize position, opacity, and batch apply.",
   openGraph: {
-    title: "Watermark Image Online | TeenyImage",
+    title: "Watermark Image Online | TeenyIMG",
     description: "Protect your photos by stamping text or logo watermarks. Customize position, opacity, and batch apply.",
   },
 };

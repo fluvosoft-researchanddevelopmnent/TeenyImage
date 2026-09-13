@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "Remove Background Online",
   description: "Remove backgrounds from images automatically in your browser using AI. Download transparent PNGs instantly.",
   openGraph: {
-    title: "Remove Background Online | TeenyImage",
+    title: "Remove Background Online | TeenyIMG",
     description: "Remove backgrounds from images automatically in your browser using AI. Download transparent PNGs instantly.",
   },
 };

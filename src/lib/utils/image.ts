@@ -1,5 +1,5 @@
 /**
- * Pure client-side image and canvas utility functions for TeenyImage
+ * Pure client-side image and canvas utility functions for TeenyIMG
  * 100% browser-based with memory safety.
  */
 

@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ArrowRight, ChevronRight, Clock, ShieldCheck } from "lucide-react";
@@ -26,10 +26,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: `${post.title} | TeenyImage`,
+    title: `${post.title} | TeenyIMG`,
     description: post.excerpt,
     openGraph: {
-      title: `${post.title} | TeenyImage`,
+      title: `${post.title} | TeenyIMG`,
       description: post.excerpt,
       type: "article",
       publishedTime: "2026-09-07T00:00:00.000Z",

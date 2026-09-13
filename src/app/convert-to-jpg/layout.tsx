@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "Convert to JPG Online",
   description: "Convert PNG, GIF, TIF, PSD, SVG, WEBP, or RAW photos to JPG format in seconds. Batch processing supported.",
   openGraph: {
-    title: "Convert to JPG Online | TeenyImage",
+    title: "Convert to JPG Online | TeenyIMG",
     description: "Convert PNG, GIF, TIF, PSD, SVG, WEBP, or RAW photos to JPG format in seconds. Batch processing supported.",
   },
 };

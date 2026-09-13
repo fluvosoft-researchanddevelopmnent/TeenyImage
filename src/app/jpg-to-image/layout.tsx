@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "Convert from JPG Online",
   description: "Convert JPG images to PNG, WEBP, or animated GIF format with adjustable quality settings.",
   openGraph: {
-    title: "Convert from JPG Online | TeenyImage",
+    title: "Convert from JPG Online | TeenyIMG",
     description: "Convert JPG images to PNG, WEBP, or animated GIF format with adjustable quality settings.",
   },
 };

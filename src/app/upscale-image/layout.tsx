@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "Upscale Image Online",
   description: "Enlarge and enhance your images with 2x and 4x bicubic upscaling. Free, fast, and completely private.",
   openGraph: {
-    title: "Upscale Image Online | TeenyImage",
+    title: "Upscale Image Online | TeenyIMG",
     description: "Enlarge and enhance your images with 2x and 4x bicubic upscaling. Free, fast, and completely private.",
   },
 };

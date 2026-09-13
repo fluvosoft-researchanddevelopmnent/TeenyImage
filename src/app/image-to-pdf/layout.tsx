@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "Image to PDF Converter",
   description: "Combine multiple JPG, PNG, or WEBP images into a single PDF document. Customize orientation, margins, and page order.",
   openGraph: {
-    title: "Image to PDF Converter | TeenyImage",
+    title: "Image to PDF Converter | TeenyIMG",
     description: "Combine multiple JPG, PNG, or WEBP images into a single PDF document. Customize orientation, margins, and page order.",
   },
 };

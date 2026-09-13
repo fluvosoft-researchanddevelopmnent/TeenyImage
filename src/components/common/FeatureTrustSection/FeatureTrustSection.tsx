@@ -15,7 +15,7 @@ export function FeatureTrustSection() {
               <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-background">
                 <Image
                   src="/images/feature/privacy-promo.png"
-                  alt="TeenyImage private image tools preview"
+                  alt="TeenyIMG private image tools preview"
                   fill
                   sizes="(max-width: 768px) 100vw, 45vw"
                   className="object-contain object-center"
@@ -26,7 +26,7 @@ export function FeatureTrustSection() {
 
             <div className="text-center md:max-w-xl md:text-left md:justify-self-start">
               <h2 className="text-2xl font-extrabold leading-tight tracking-tight text-text-primary sm:text-3xl md:text-4xl">
-                Image editing made simple with TeenyImage
+                Image editing made simple with TeenyIMG
               </h2>
               <p className="mt-4 text-base leading-relaxed text-text-secondary md:text-[17px]">
                 Experience the speed, simplicity, and security of tools that run in your browser.
@@ -51,7 +51,7 @@ export function FeatureTrustSection() {
               The image tool built for private, everyday work
             </h2>
             <p className="mt-4 text-base leading-relaxed text-text-secondary md:text-[17px]">
-              TeenyImage is your browser-based toolkit for editing and converting images with ease. Get the tools you
+              TeenyIMG is your browser-based toolkit for editing and converting images with ease. Get the tools you
               need to work efficiently with digital images while keeping your files on your device.
             </p>
 
