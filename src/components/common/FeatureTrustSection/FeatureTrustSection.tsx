@@ -15,7 +15,7 @@ export function FeatureTrustSection() {
               <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-background">
                 <Image
                   src="/images/feature/privacy-promo.png"
-                  alt="TeenyImage document and image tools preview"
+                  alt="TeenyImage private image tools preview"
                   fill
                   sizes="(max-width: 768px) 100vw, 45vw"
                   className="object-contain object-center"
@@ -52,7 +52,7 @@ export function FeatureTrustSection() {
             </h2>
             <p className="mt-4 text-base leading-relaxed text-text-secondary md:text-[17px]">
               TeenyImage is your browser-based toolkit for editing and converting images with ease. Get the tools you
-              need to work efficiently with digital documents while keeping your files on your device.
+              need to work efficiently with digital images while keeping your files on your device.
             </p>
 
             <div className="mt-10 flex flex-wrap items-center justify-center gap-8 md:gap-12">

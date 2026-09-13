@@ -115,44 +115,45 @@ git checkout -b feature/optimize-and-convert-tools
 ### Task Checklist — 8 Tools
 
 #### 1. Compress Image (`/compress-image`)
-- [ ] Logic: `src/lib/image/compressImage.ts` (using `browser-image-compression` or Canvas quality scaling)
-- [ ] UI: `src/app/compress-image/page.tsx` (Quality selector: Strong, Recommended, High Quality)
-- [ ] UX: Displays original file size vs compressed size + reduction % badge
+- [x] Logic: `src/lib/image/compressImage.ts` (using `browser-image-compression` or Canvas quality scaling)
+- [x] UI: `src/app/compress-image/page.tsx` (Quality selector: Strong, Recommended, High Quality)
+- [x] UX: Displays original file size vs compressed size + reduction % badge
 
 #### 2. Resize Image (`/resize-image`)
-- [ ] Logic: `src/lib/image/resizeImage.ts` (Canvas-based pixel / percentage resizing)
-- [ ] UI: `src/app/resize-image/page.tsx` (Width/Height inputs, Aspect Ratio lock toggle, % vs px toggle)
+- [x] Logic: `src/lib/image/resizeImage.ts` (Canvas-based pixel / percentage resizing)
+- [x] UI: `src/app/resize-image/page.tsx` (Width/Height inputs, Aspect Ratio lock toggle, % vs px toggle)
 
 #### 3. Upscale Image (`/upscale-image`)
-- [ ] Logic: `src/lib/image/upscaleImage.ts` (Canvas 2x / 4x bicubic scaling)
-- [ ] UI: `src/app/upscale-image/page.tsx` (2x and 4x scale buttons, before/after resolution preview)
+- [x] Logic: `src/lib/image/upscaleImage.ts` (Canvas 2x / 4x bicubic scaling)
+- [x] UI: `src/app/upscale-image/page.tsx` (2x and 4x scale buttons, before/after resolution preview)
 
 #### 4. Convert to JPG (`/convert-to-jpg`)
-- [ ] Logic: `src/lib/image/convertToJpg.ts` (Supports PNG, GIF, WEBP, SVG, BMP ➔ JPG)
-- [ ] UI: `src/app/convert-to-jpg/page.tsx` (Quality slider 1–100, batch files upload)
-- [ ] UX: Multi-file batch convert with ZIP download via JSZip
+- [x] Logic: `src/lib/image/convertToJpg.ts` (Supports PNG, GIF, WEBP, SVG, BMP ➔ JPG)
+- [x] UI: `src/app/convert-to-jpg/page.tsx` (Quality slider 1–100, batch files upload)
+- [x] UX: Multi-file batch convert with ZIP download via JSZip
 
 #### 5. Convert from JPG (`/jpg-to-image`)
-- [ ] Logic: `src/lib/image/convertFromJpg.ts` (JPG ➔ PNG, WEBP, GIF)
-- [ ] UI: `src/app/jpg-to-image/page.tsx` (Target format dropdown, quality controls)
+- [x] Logic: `src/lib/image/convertFromJpg.ts` (JPG ➔ PNG, WEBP, GIF)
+- [x] UI: `src/app/jpg-to-image/page.tsx` (Target format dropdown, quality controls)
 
 #### 6. Convert to PNG (`/convert-to-png`)
-- [ ] Logic: `src/lib/image/convertToPng.ts` (Lossless conversion to PNG format)
-- [ ] UI: `src/app/convert-to-png/page.tsx` (Drag-and-drop batch upload, direct lossless convert)
+- [x] Logic: `src/lib/image/convertToPng.ts` (Lossless conversion to PNG format)
+- [x] UI: `src/app/convert-to-png/page.tsx` (Drag-and-drop batch upload, direct lossless convert)
 
 #### 7. Image to PDF (`/image-to-pdf`)
-- [ ] Logic: `src/lib/image/imageToPdf.ts` (Client-side PDF compilation via `jsPDF`)
-- [ ] UI: `src/app/image-to-pdf/page.tsx` (Page size A4/Letter/Original, Orientation portrait/landscape, Margins)
-- [ ] UX: Thumbnail reordering list prior to PDF compilation
+- [x] Logic: `src/lib/image/imageToPdf.ts` (Client-side PDF compilation via `jsPDF`)
+- [x] UI: `src/app/image-to-pdf/page.tsx` (Page size A4/Letter/Original, Orientation portrait/landscape, Margins)
+- [x] UX: Thumbnail reordering list prior to PDF compilation
 
 #### 8. HTML to Image (`/html-to-image`)
-- [ ] Logic: `src/lib/image/htmlToImage.ts` (Render raw HTML / SVG to canvas ➔ JPG/PNG)
-- [ ] UI: `src/app/html-to-image/page.tsx` (Tabs: Raw HTML textarea / File upload, Output format switch)
+- [x] Logic: `src/lib/image/htmlToImage.ts` (Render raw HTML / SVG to canvas ➔ JPG/PNG)
+- [x] UI: `src/app/html-to-image/page.tsx` (Tabs: Raw HTML textarea / File upload, Output format switch)
 
 ### Stop & Self-Assessment Criteria
-- [ ] All 8 tool pages compile with `npm run build` without TypeScript errors
-- [ ] Corrupt image upload shows a clean, non-crashing error notification
-- [ ] Object URLs are revoked after download to prevent memory leaks
+- [x] All 8 tool pages compile with `npm run build` without TypeScript errors
+- [x] Corrupt image upload shows a clean, non-crashing error notification
+- [x] Object URLs are revoked after download to prevent memory leaks
+- [x] Merged into `development` via verified PR (Commit `e6b6239`)
 - [ ] Commit history follows `feat(tool-name): message` format
 - [ ] PR created targeting `development` branch (reviewed by `@obsessus`)
 
