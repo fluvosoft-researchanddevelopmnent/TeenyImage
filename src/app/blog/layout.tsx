@@ -1,10 +1,10 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "TeenyImage Blog — Guides & Tutorials",
+  title: "TeenyIMG Blog — Guides & Tutorials",
   description: "Expert tips, tutorials, and guides on image optimization, editing, privacy, and file formats.",
   openGraph: {
-    title: "TeenyImage Blog — Guides & Tutorials | TeenyImage",
+    title: "TeenyIMG Blog — Guides & Tutorials | TeenyIMG",
     description: "Expert tips, tutorials, and guides on image optimization, editing, privacy, and file formats.",
   },
 };

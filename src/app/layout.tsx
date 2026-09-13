@@ -15,13 +15,13 @@ const poppins = Poppins({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://teenyimage.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://teenyimg.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "TeenyImage — Free Online Image Tools",
-    template: "%s | TeenyImage",
+    default: "TeenyIMG — Free Online Image Tools",
+    template: "%s | TeenyIMG",
   },
   description:
     "Free, browser-based image tools. Compress, resize, crop, rotate, convert, remove background, and more — 100% client-side, private, and unlimited.",
@@ -50,14 +50,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteUrl,
-    siteName: "TeenyImage",
-    title: "TeenyImage — Free Online Image Tools",
+    siteName: "TeenyIMG",
+    title: "TeenyIMG — Free Online Image Tools",
     description:
       "100% client-side, private image tools. Compress, resize, crop, convert, and edit images without uploading files to any server.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "TeenyImage — Free Online Image Tools",
+    title: "TeenyIMG — Free Online Image Tools",
     description:
       "100% browser-based private image toolkit. Compress, convert, edit, and optimize images with zero cloud uploads.",
   },
@@ -84,7 +84,7 @@ const jsonLd = {
       "@type": "WebSite",
       "@id": `${siteUrl}/#website`,
       url: siteUrl,
-      name: "TeenyImage",
+      name: "TeenyIMG",
       description: "100% client-side private image tools. Compress, resize, crop, convert, and edit photos.",
       publisher: {
         "@type": "Organization",
@@ -95,7 +95,7 @@ const jsonLd = {
     {
       "@type": "SoftwareApplication",
       "@id": `${siteUrl}/#application`,
-      name: "TeenyImage",
+      name: "TeenyIMG",
       url: siteUrl,
       applicationCategory: "MultimediaApplication",
       operatingSystem: "Any",

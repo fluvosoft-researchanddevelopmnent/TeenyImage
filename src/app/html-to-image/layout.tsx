@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "HTML to Image Converter",
   description: "Convert HTML code or web documents into high-resolution JPG or PNG images. 100% browser-based.",
   openGraph: {
-    title: "HTML to Image Converter | TeenyImage",
+    title: "HTML to Image Converter | TeenyIMG",
     description: "Convert HTML code or web documents into high-resolution JPG or PNG images. 100% browser-based.",
   },
 };

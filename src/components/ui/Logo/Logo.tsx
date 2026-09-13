@@ -15,7 +15,7 @@ export function Logo({ className }: LogoProps) {
         className,
       )}
     >
-      <span className="text-[22px] font-bold leading-none tracking-tight sm:text-[26px]">TeenyImage</span>
+      <span className="text-[22px] font-bold leading-none tracking-tight sm:text-[26px]">TeenyIMG</span>
     </Link>
   );
 }

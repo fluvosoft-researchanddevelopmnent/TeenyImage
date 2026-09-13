@@ -11,7 +11,7 @@ export interface ZipFileItem {
  */
 export async function createZip(
   files: ZipFileItem[],
-  zipName: string = "teenyimage_bundle.zip"
+  zipName: string = "teenyimg_bundle.zip"
 ): Promise<{ blob: Blob; fileName: string }> {
   const zip = new JSZip();
 

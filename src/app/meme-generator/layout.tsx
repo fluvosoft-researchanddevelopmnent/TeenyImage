@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "Meme Generator Online",
   description: "Create hilarious memes online in seconds. Add custom captions, adjust typography, and download instantly.",
   openGraph: {
-    title: "Meme Generator Online | TeenyImage",
+    title: "Meme Generator Online | TeenyIMG",
     description: "Create hilarious memes online in seconds. Add custom captions, adjust typography, and download instantly.",
   },
 };

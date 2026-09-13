@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "Photo Editor Online",
   description: "Free online photo editor. Add text, shapes, stickers, drawings, and effects directly in your browser.",
   openGraph: {
-    title: "Photo Editor Online | TeenyImage",
+    title: "Photo Editor Online | TeenyIMG",
     description: "Free online photo editor. Add text, shapes, stickers, drawings, and effects directly in your browser.",
   },
 };

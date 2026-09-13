@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from "react";
 import Link from "next/link";
@@ -26,7 +26,7 @@ export default function BlogPage() {
             Guides & Insights
           </div>
           <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-text-primary sm:text-4xl md:text-5xl">
-            TeenyImage Blog
+            TeenyIMG Blog
           </h1>
           <p className="mt-4 text-base leading-relaxed text-text-secondary sm:text-lg">
             Practical tutorials, format deep-dives, and performance guides for editing and optimizing images privately in your browser.

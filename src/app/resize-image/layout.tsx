@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "Resize IMAGE Online",
   description: "Resize JPG, PNG, SVG, or GIF images by defining new pixel dimensions or percentage scale. Fast and private.",
   openGraph: {
-    title: "Resize IMAGE Online | TeenyImage",
+    title: "Resize IMAGE Online | TeenyIMG",
     description: "Resize JPG, PNG, SVG, or GIF images by defining new pixel dimensions or percentage scale. Fast and private.",
   },
 };

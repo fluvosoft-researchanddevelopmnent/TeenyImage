@@ -11,7 +11,7 @@ const CARDS = [
       "Batch process and convert images in your browser — private, local, and with no upload limits.",
     href: "/",
     image: "/images/work-your-way/desktop.png",
-    imageAlt: "TeenyImage desktop converter preview",
+    imageAlt: "TeenyIMG desktop converter preview",
   },
   {
     title: "On-the-go with Mobile",
@@ -19,7 +19,7 @@ const CARDS = [
       "Your favorite image tools, right in your pocket. Keep working on your projects anytime, anywhere.",
     href: "/",
     image: "/images/work-your-way/mobile.png",
-    imageAlt: "TeenyImage mobile editing preview",
+    imageAlt: "TeenyIMG mobile editing preview",
   },
   {
     title: "Built for business",
@@ -27,7 +27,7 @@ const CARDS = [
       "Automate image workflows, onboard teams easily, and scale conversions with flexible plans.",
     href: "/",
     image: "/images/work-your-way/business.png",
-    imageAlt: "TeenyImage business tools preview",
+    imageAlt: "TeenyIMG business tools preview",
   },
 ] as const;
 

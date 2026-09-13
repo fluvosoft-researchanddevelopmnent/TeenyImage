@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "TeenyImage — Free Online Image Tools";
+export const alt = "TeenyIMG — Free Online Image Tools";
 export const size = {
   width: 1200,
   height: 630,
@@ -89,7 +89,7 @@ export default async function Image() {
                 letterSpacing: "-0.5px",
               }}
             >
-              TeenyImage
+              TeenyIMG
             </div>
           </div>
 

@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "Crop IMAGE Online",
   description: "Crop JPG, PNG, or GIF images online with customizable aspect ratios and pixel-perfect cropping.",
   openGraph: {
-    title: "Crop IMAGE Online | TeenyImage",
+    title: "Crop IMAGE Online | TeenyIMG",
     description: "Crop JPG, PNG, or GIF images online with customizable aspect ratios and pixel-perfect cropping.",
   },
 };
