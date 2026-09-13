@@ -1,4 +1,4 @@
-﻿export interface BlogPost {
+export interface BlogPost {
   slug: string;
   title: string;
   excerpt: string;
@@ -168,7 +168,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "2. How browser-based processing works",
         paragraphs: [
-          "Modern web browsers are capable of running powerful computations locally. With WebAssembly and the HTML5 Canvas API, TeenyImage performs operations like resizing, watermarking, background removal, and compression directly on your computer''s CPU and GPU.",
+          "Modern web browsers are capable of running powerful computations locally. With WebAssembly and the HTML5 Canvas API, TeenyImage performs operations like resizing, watermarking, background removal, and compression directly on your computer's CPU and GPU.",
           "No bytes are sent across the wire. Disconnecting your internet after opening TeenyImage will still allow you to process and export your files.",
         ],
         calloutLink: {
@@ -181,6 +181,117 @@ export const BLOG_POSTS: BlogPost[] = [
         paragraphs: [
           "TeenyImage requires no registration, login, or personal details. Your work session lives strictly in temporary browser memory and is cleanly disposed of the moment you close the tab.",
           "We believe essential digital tools should be completely free, unlimited, and genuinely private.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "how-to-merge-multiple-images-into-a-single-pdf",
+    title: "How to Merge Multiple Images into a Single PDF Privately in Your Browser",
+    excerpt:
+      "Need to combine receipts, document scans, or photos into a single PDF? Learn how to arrange, resize, and convert multiple images into a professional PDF without uploading files.",
+    date: "September 13, 2026",
+    author: "TeenyImage Editorial",
+    readTime: "5 min read",
+    category: "Formats",
+    primaryCta: {
+      label: "Merge Images to PDF Free",
+      href: "/image-to-pdf",
+    },
+    relatedTools: [
+      { title: "Image to PDF", href: "/image-to-pdf" },
+      { title: "Compress Image", href: "/compress-image" },
+      { title: "Resize Image", href: "/resize-image" },
+      { title: "Convert to JPG", href: "/convert-to-jpg" },
+    ],
+    sections: [
+      {
+        heading: "1. Why combining images into a single PDF is better",
+        paragraphs: [
+          "Emailing or archiving ten loose JPEG files is messy for recipients and difficult to print. Compiling images into a clean, paginated PDF document makes sharing invoices, photo portfolios, or application documents seamless.",
+          "A single PDF file preserves presentation order and ensures every page renders identically on mobile phones, tablets, and desktop computers.",
+        ],
+      },
+      {
+        heading: "2. Organizing and reordering pages effortlessly",
+        paragraphs: [
+          "When selecting multiple photos, they rarely appear in the exact chronological sequence you need. TeenyImage's Image to PDF tool features interactive drag-and-drop reordering and arrow buttons so you can arrange pages before generating the document.",
+          "Live image thumbnail previews help you verify orientation and layout at a glance.",
+        ],
+        calloutLink: {
+          text: "Try our client-side Image to PDF tool",
+          href: "/image-to-pdf",
+        },
+      },
+      {
+        heading: "3. Customizing page size, orientation, and margins",
+        paragraphs: [
+          "Standard office documents require precise paper standards. You can choose between A4 and US Letter sizes, switch between Portrait and Landscape orientations, and adjust margins from None to Large.",
+          "Transparent PNG and WebP images are automatically flattened onto clean white backgrounds to ensure perfect print-ready output.",
+        ],
+      },
+      {
+        heading: "4. Uncompromising privacy for sensitive records",
+        paragraphs: [
+          "Tax receipts, medical scans, government IDs, and signed contracts should never be uploaded to remote file converters. With TeenyImage, jsPDF compiles the PDF directly inside your browser.",
+          "Your confidential files never leave your device, giving you total peace of mind.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "how-to-upscale-and-resize-images-without-blur",
+    title: "How to Upscale and Resize Images Without Losing Sharpness",
+    excerpt:
+      "Discover how multi-pass bicubic smoothing and aspect ratio locking allow you to enlarge or downscale photos for web, print, and social media without blur.",
+    date: "September 13, 2026",
+    author: "TeenyImage Editorial",
+    readTime: "4 min read",
+    category: "Optimization",
+    primaryCta: {
+      label: "Upscale Images Free",
+      href: "/upscale-image",
+    },
+    relatedTools: [
+      { title: "Upscale Image", href: "/upscale-image" },
+      { title: "Resize Image", href: "/resize-image" },
+      { title: "Convert to PNG", href: "/convert-to-png" },
+      { title: "Compress Image", href: "/compress-image" },
+    ],
+    sections: [
+      {
+        heading: "1. The difference between downscaling and upscaling",
+        paragraphs: [
+          "Downscaling an image (making it smaller) is computationally straightforward: the browser samples neighboring pixels and discards redundant data to reduce file weight.",
+          "Upscaling (making an image larger) is much more challenging because the software must create new pixels where none existed before. Simple scaling often causes pixelation and blurry edges.",
+        ],
+        calloutLink: {
+          text: "Enlarge photos with Upscale Image",
+          href: "/upscale-image",
+        },
+      },
+      {
+        heading: "2. How multi-pass bicubic smoothing prevents pixelation",
+        paragraphs: [
+          "TeenyImage's upscaler employs high-quality bicubic interpolation with multi-pass intermediate stages for 4x scaling. Instead of blowing up pixels abruptly, intermediate passes calculate smooth color gradients across newly synthesized pixels.",
+          "This technique preserves edge sharpness while preventing the blocky artifacts typical of naive nearest-neighbor scaling.",
+        ],
+      },
+      {
+        heading: "3. Aspect ratio locking: Avoid stretched photos",
+        paragraphs: [
+          "When resizing images for social media or blog headers, accidental stretching or squishing ruins visual appeal. Always ensure your aspect ratio is locked so adjusting width automatically calculates the correct proportional height.",
+          "You can also toggle between exact pixel values (px) and proportional percentages (%) depending on your project needs.",
+        ],
+        calloutLink: {
+          text: "Resize dimensions with Resize Image",
+          href: "/resize-image",
+        },
+      },
+      {
+        heading: "4. Hardware-accelerated, private processing",
+        paragraphs: [
+          "All canvas scaling calculations run directly on your computer's graphics hardware through the browser Canvas API. Even high-resolution 4x upscales process in seconds without consuming network bandwidth or transmitting your photos to external servers.",
         ],
       },
     ],
