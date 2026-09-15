@@ -174,47 +174,47 @@ git checkout -b feature/edit-security-create-tools
 ### Task Checklist — 8 Tools
 
 #### 1. Crop Image (`/crop-image`)
-- [ ] Logic: `src/lib/image/cropImage.ts` (Canvas sub-rectangle extraction)
-- [ ] UI: `src/app/crop-image/page.tsx` (Interactive draggable crop box, aspect ratio presets: Free, 1:1, 4:3, 16:9)
+- [x] Logic: `src/lib/image/cropImage.ts` (Canvas sub-rectangle extraction)
+- [x] UI: `src/app/crop-image/page.tsx` (Interactive draggable crop box, aspect ratio presets: Free, 1:1, 4:3, 16:9)
 
 #### 2. Rotate Image (`/rotate-image`)
-- [ ] Logic: `src/lib/image/rotateImage.ts` (Canvas rotation with canvas bounds re-calculation)
-- [ ] UI: `src/app/rotate-image/page.tsx` (Rotate 90° CW, 90° CCW, 180°, custom angle slider)
-- [ ] UX: Batch rotate with ZIP download
+- [x] Logic: `src/lib/image/rotateImage.ts` (Canvas rotation with canvas bounds re-calculation)
+- [x] UI: `src/app/rotate-image/page.tsx` (Rotate 90° CW, 90° CCW, 180°, custom angle slider)
+- [x] UX: Batch rotate with ZIP download
 
 #### 3. Flip Image (`/flip-image`)
-- [ ] Logic: `src/lib/image/flipImage.ts` (Canvas `scale(-1, 1)` and `scale(1, -1)`)
-- [ ] UI: `src/app/flip-image/page.tsx` (Flip Horizontal & Flip Vertical buttons, live preview)
+- [x] Logic: `src/lib/image/flipImage.ts` (Canvas `scale(-1, 1)` and `scale(1, -1)`)
+- [x] UI: `src/app/flip-image/page.tsx` (Flip Horizontal & Flip Vertical buttons, live preview)
 
 #### 4. Photo Editor (`/photo-editor`)
-- [ ] Logic: `src/lib/image/photoEditor/exportEditedImage.ts` & `types.ts`
-- [ ] UI: `src/app/photo-editor/page.tsx` (Fullscreen portal editor modeled after TeenyPDF Edit PDF)
-- [ ] Features: Select tool, Freehand pencil, Text overlays, Shapes (Rectangle, Circle, Arrow), Color picker, Undo/Redo, Zoom, Layer controls
+- [x] Logic: `src/lib/image/photoEditor/exportEditedImage.ts` & `types.ts`
+- [x] UI: `src/app/photo-editor/page.tsx` (Fullscreen portal editor modeled after TeenyPDF Edit PDF)
+- [x] Features: Select tool, Freehand pencil, Text overlays, Shapes (Rectangle, Circle, Arrow), Color picker, Undo/Redo, Zoom, Layer controls
 
 #### 5. Meme Generator (`/meme-generator`)
-- [ ] Logic: Canvas text overlay with black stroke and white fill (Impact font standard)
-- [ ] UI: `src/app/meme-generator/page.tsx` (Top text, Bottom text, Font size, Live canvas preview)
+- [x] Logic: Canvas text overlay with black stroke and white fill (Impact font standard)
+- [x] UI: `src/app/meme-generator/page.tsx` (Top text, Bottom text, Font size, Live canvas preview)
 
 #### 6. Remove Background (`/remove-background`)
-- [ ] Logic: `src/lib/image/removeBackground.ts` (Client-side `@imgly/background-removal` via WASM)
-- [ ] UI: `src/app/remove-background/page.tsx` (One-click auto removal, transparency checkerboard preview, PNG export)
+- [x] Logic: `src/lib/image/removeBackground.ts` (Client-side `@imgly/background-removal` via WASM)
+- [x] UI: `src/app/remove-background/page.tsx` (One-click auto removal, transparency checkerboard preview, PNG export)
 
 #### 7. Watermark Image (`/watermark-image`)
-- [ ] Logic: `src/lib/image/watermarkImage.ts` (Overlay text or image with alpha opacity)
-- [ ] UI: `src/app/watermark-image/page.tsx` (Text / Image mode, 9-point anchor grid selector, Opacity slider, Font styling)
-- [ ] UX: Apply watermark to batch images with ZIP download
+- [x] Logic: `src/lib/image/watermarkImage.ts` (Overlay text or image with alpha opacity)
+- [x] UI: `src/app/watermark-image/page.tsx` (Text / Image mode, 9-point anchor grid selector, Opacity slider, Font styling)
+- [x] UX: Apply watermark to batch images with ZIP download
 
 #### 8. Blur Face (`/blur-face`)
-- [ ] Logic: `src/lib/image/blurFace.ts` (Pixelate / Gaussian blur filter over selected canvas coordinates)
-- [ ] UI: `src/app/blur-face/page.tsx` (Manual selection blur box + Blur intensity slider Low/Med/High)
+- [x] Logic: `src/lib/image/blurFace.ts` (Pixelate / Gaussian blur filter over selected canvas coordinates)
+- [x] UI: `src/app/blur-face/page.tsx` (Manual selection blur box + Blur intensity slider Low/Med/High)
 
 ### Stop & Self-Assessment Criteria
-- [ ] All 8 tool pages compile with `npm run build` without TypeScript errors
-- [ ] Photo Editor launches in full screen and exports clear images
-- [ ] Corrupt file upload handles errors gracefully
-- [ ] Object URLs are revoked after download to prevent memory leaks
-- [ ] Commit history follows `feat(tool-name): message` format
-- [ ] PR created targeting `development` branch (reviewed by `@obsessus`)
+- [x] All 8 tool pages compile with `npm run build` without TypeScript errors
+- [x] Photo Editor launches in full screen and exports clear images
+- [x] Corrupt file upload handles errors gracefully
+- [x] Object URLs are revoked after download to prevent memory leaks
+- [x] Commit history follows `feat(tool-name): message` format
+- [x] PR created targeting `development` branch (reviewed by `@obsessus`)
 
 ---
 
@@ -223,8 +223,8 @@ git checkout -b feature/edit-security-create-tools
 | Milestone | Deliverables | Responsible | Target |
 |---|---|---|---|
 | **M1: Foundation** | Project scaffold, layout, types, constants, 20 route shells | `@obsessus` | ✅ DONE |
-| **M2: Core Features** | 8 Conversion & Optimization tools | `@ratulanik` | In Progress |
-| **M3: Creative Features**| 8 Editing, Security & Creative tools | `@shafinSI` | In Progress |
-| **M4: Production Polish**| Assets, SEO, Blog, 404, Performance lazy-loading | `@obsessus` | In Progress |
-| **M5: Integration QA** | Complete end-to-end testing on `development` | All three | Milestone 4 + 1 day |
-| **M6: Launch** | PR merge `development` ➔ `main` | `@obsessus` | Launch day |
+| **M2: Core Features** | 8 Conversion & Optimization tools | `@ratulanik` | ✅ DONE |
+| **M3: Creative Features**| 8 Editing, Security & Creative tools | `@shafinSI` | ✅ DONE |
+| **M4: Production Polish**| Assets, SEO, Blog, 404, Performance lazy-loading, Rebrand | `@obsessus` | ✅ DONE |
+| **M5: Integration QA** | Complete end-to-end testing on `development` | All three | ✅ Active |
+| **M6: Launch** | PR merge `development` ➔ `main` | `@obsessus` | Ready |
