@@ -10,7 +10,7 @@ const CARDS = [
     title: "Work offline with Desktop",
     description:
       "Batch process and transform high-resolution images in your desktop browser — fast, private, and with zero upload wait times.",
-    image: "/images/work-your-way/desktop-new.jpg",
+    image: "/images/work-your-way/desktop.jpg",
     imageAlt: "TeenyIMG desktop browser workstation preview",
     highlights: ["Hardware accelerated", "Works without internet", "No software install"],
   },
@@ -20,7 +20,7 @@ const CARDS = [
     title: "On-the-go with Mobile",
     description:
       "Quickly crop, resize, and optimize photos directly from your smartphone or tablet camera roll with touch-first controls.",
-    image: "/images/work-your-way/mobile-new.jpg",
+    image: "/images/work-your-way/mobile.jpg",
     imageAlt: "TeenyIMG mobile photo editing preview",
     highlights: ["Touch-optimized", "Direct camera roll edit", "Zero phone storage used"],
   },
@@ -30,7 +30,7 @@ const CARDS = [
     title: "Built for creative workflows",
     description:
       "Process multiple images simultaneously, apply uniform watermarks, and export cleanly as individual files or ZIP packages.",
-    image: "/images/work-your-way/business-new.jpg",
+    image: "/images/work-your-way/business.jpg",
     imageAlt: "TeenyIMG batch image processing preview",
     highlights: ["Multi-image processing", "One-click ZIP bundle", "Unlimited free usage"],
   },

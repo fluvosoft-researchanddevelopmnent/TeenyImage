@@ -18,7 +18,7 @@ export function FeatureTrustSection() {
                   alt="TeenyIMG private image tools preview"
                   fill
                   sizes="(max-width: 768px) 100vw, 45vw"
-                  className="object-contain object-center"
+                  className="object-cover object-center"
                   priority={false}
                 />
               </div>
